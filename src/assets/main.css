@@ -1,0 +1,67 @@
+/*
+tablet: 600px
+desktop: 1000px
+*/
+
+:root {
+  --font-family: 'Plus Jakarta Sans', sans-serif;
+  --font-secondary: #828FA3;
+  --shadow: 0px 4px 6px rgba(54, 78, 126, 0.101545);
+  --primary: #635FC7;
+  --primary-hover: #A8A4FF;
+  --red: #EA5555;
+  --light-red: #FF9898;
+  --button-secondary-font: #635FC7;
+  --white: #FFFFFF;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  height: 100%;
+  width: 100%;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow: hidden;
+}
+
+body[data-theme="light"] {
+  --light: #FFFFFF;
+  --medium: #E4EBFA;
+  --medium-gradient: linear-gradient(180deg, #E9EFFA 0%, rgba(233, 239, 250, 0.5) 100%);
+  --dark: #F4F7FD;
+  --font-primary: #000112;
+  --blur: rgba(0, 0, 0, 0.5);
+  --button-secondary: rgba(99, 95, 199, 0.1);
+  --button-secondary-hover: rgba(99, 95, 199, 0.25);
+  --form-label: #828FA3;
+}
+
+body[data-theme="dark"] {
+  --light: #2B2C37;
+  --medium: #3E3F4E;
+  --medium-gradient: linear-gradient(180deg, rgba(43, 44, 55, 0.25) 0%, rgba(43, 44, 55, 0.125) 100%);
+  --dark: #20212C;
+  --font-primary: #FFFFFF;
+  --blur: #20212C;
+  --button-secondary: #FFFFFF;
+  --button-secondary-hover: #FFFFFF;
+  --form-label: #FFFFFF;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  background-color: var(--light);
+}
