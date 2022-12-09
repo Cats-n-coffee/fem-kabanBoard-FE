@@ -21,12 +21,21 @@
                 <button @click="showMoreActions" class="more-actions">
                     <VerticalEllipsisIcon />
                 </button>
+                <div class="board-actions-menu" :class="{ show: isBoardActionOpen }">
+                    <button class="action-edit-board" @click="showEditBoardModal">
+                        Edit Board
+                    </button>
+                    <button class="action-delete-board" @click="showDeleteBoardModal">
+                        Delete Board
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import Button from '@/components/common/Button.vue';
 import Logo from '@/components/common/Logo.vue';
@@ -42,14 +51,23 @@ defineProps<{
 const sidebarStore = useHideSidebar();
 const { hideSidebar } = storeToRefs(sidebarStore);
 const { handleSidebarMobile } = sidebarStore;
+const isBoardActionOpen = ref(false);
 
 const addNewTaskHandler = () => {
     console.log('add task');
 };
 
 const showMoreActions = () => {
-    console.log('show actions');
+    isBoardActionOpen.value = !isBoardActionOpen.value;
 };
+
+const showEditBoardModal = () => {
+    console.log('edit board');
+}
+
+const showDeleteBoardModal = () => {
+    console.log('delete board');
+}
 </script>
 
 <style scoped lang="less">
@@ -67,7 +85,7 @@ const showMoreActions = () => {
     align-items: center;
     padding: 16px 18px;
 
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: 700px) {
         border-left: 1px solid var(--medium);
         padding: 16px 24px;
     }
@@ -78,12 +96,25 @@ const showMoreActions = () => {
     justify-content: center;
     align-items: center;
 
+    h2 {
+        color: var(--font-primary);
+        font-size: 18px;
+        font-weight: 700;
+    }
+
     .logo-mobile {
         margin-right: 18px;
+    }
 
-        @media screen and (min-width: 600px) {
+    @media screen and (min-width: 700px) {
+        .logo-mobile {
             display: none;
         }
+
+        h2 {
+            font-size: 24px;
+        }
+
     }
 }
 
@@ -97,7 +128,7 @@ const showMoreActions = () => {
         cursor: pointer;
     }
 
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: 700px) {
         display: none;
     }
 }
@@ -106,6 +137,7 @@ const showMoreActions = () => {
     display: flex;
     align-items: center;
     justify-items: center;
+    position: relative;
 }
 
 .more-actions {
@@ -118,18 +150,62 @@ const showMoreActions = () => {
     }
 }
 
+.board-actions-menu {
+    position: absolute;
+    width: 200%;
+    background-color: var(--board-actions);
+    top: 120%;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px;
+    gap: 16px;
+    border-radius: 8px;
+
+    &.show {
+        display: flex;
+    }
+
+    button {
+        background: none;
+        border: none;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--font-secondary);
+
+        &:hover {
+            cursor: pointer;
+            color: var(--font-primary);
+        }
+    }
+
+    .action-delete-board {
+        color: var(--red);
+
+        &:hover {
+            color: var(--light-red);
+        }
+    }
+
+    @media screen and (min-width: 700px) {
+        width: 100%;
+    }
+}
+
 :deep(.action-add-task) {
     padding: 10px 18px;
 
-    @media screen and (min-width: 600px) {
-        padding: 16px 24px;
+    @media screen and (min-width: 700px) {
+        padding: 15px 24px;
     }
 }
 
 :deep(.action-add-task-span) {
     display: none;
 
-    @media screen and (min-width: 600px) {
+    @media screen and (min-width: 700px) {
         display: inline;
         padding-left: 5px;
     }

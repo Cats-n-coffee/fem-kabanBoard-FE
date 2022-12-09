@@ -5,8 +5,8 @@
     <div class="persistent-content" key="content-1">
       <TopbarVue msg="prop msg" />
       <MainContent />
-      <button @click="handleShowSidebar" class="sidebar-show">
-        Show
+      <button v-if="hideSidebar" @click="handleShowSidebar" class="sidebar-show" aria-label="show sidebar">
+        <ShowSidebar />
       </button>
     </div>
   </TransitionGroup>
@@ -18,6 +18,7 @@ import TopbarVue from './components/topbar/Topbar.vue';
 import Sidebar from './components/sidebar/Sidebar.vue';
 import MainContent from './components/boardContent/MainContent.vue';
 import Modal from './components/common/Modal.vue';
+import ShowSidebar from '@/assets/images/icon-show-sidebar.svg?component';
 import { useHideSidebar } from '@/stores/appGlobals';
 
 const sidebarStore = useHideSidebar();
@@ -33,7 +34,7 @@ const { handleShowSidebar } = sidebarStore;
   width: 100%;
   transition: 500ms ease-in;
 
-  @media screen and (min-width: 600px) {
+  @media screen and (min-width: 700px) {
     &.enlarge {
       transform: translateX(-265px);
     }
@@ -52,8 +53,21 @@ const { handleShowSidebar } = sidebarStore;
   left: 0;
   bottom: 5%;
 
-  @media screen and (min-width: 600px) {
-    display: block;
+  @media screen and (min-width: 700px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 7px;
+    background-color: var(--primary);
+    height: 56px;
+    width: 48px;
+    border-radius: 0 100px 100px 0;
+    transition: 300ms ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      background-color: var(--primary-hover);
+    }
   }
 }
 

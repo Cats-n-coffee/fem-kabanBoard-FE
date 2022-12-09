@@ -43,6 +43,7 @@ body[data-theme="light"] {
   --button-secondary: rgba(99, 95, 199, 0.1);
   --button-secondary-hover: rgba(99, 95, 199, 0.25);
   --form-label: #828FA3;
+  --board-actions: #FFFFFF;
 }
 
 body[data-theme="dark"] {
@@ -55,6 +56,7 @@ body[data-theme="dark"] {
   --button-secondary: #FFFFFF;
   --button-secondary-hover: #FFFFFF;
   --form-label: #FFFFFF;
+  --board-actions: #20212C;
 }
 
 #app {
