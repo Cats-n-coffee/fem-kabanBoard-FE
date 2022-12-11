@@ -8,6 +8,7 @@ module.exports = {
     'eslint:recommended',
     '@vue/eslint-config-typescript',
     '@vue/eslint-config-prettier',
+    'plugin:vue/vue3-strongly-recommended',
   ],
   overrides: [
     {
@@ -15,9 +16,17 @@ module.exports = {
       extends: ['plugin:cypress/recommended'],
     },
     {
-      files: ['src/*.ts', 'src/*.ts'],
+      files: ['src/*.ts', 'src/*.ts', 'src/*.vue'],
       rules: {
         quotes: ['warning', 'double'],
+        "vue/max-attributes-per-line": ["error", {
+          "singleline": {
+            "max": 2
+          },      
+          "multiline": {
+            "max": 1
+          }
+        }]
       },
     },
   ],

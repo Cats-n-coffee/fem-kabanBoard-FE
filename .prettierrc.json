@@ -3,7 +3,8 @@
     "warning",
     {
       "singleQuote": true,
-      "parser": "flow"
+      "parser": "flow",
+      "singleAttributePerLine": true
     }
   ]
 }
