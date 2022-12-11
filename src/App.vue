@@ -13,6 +13,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import TopbarVue from './components/topbar/Topbar.vue';
 import Sidebar from './components/sidebar/Sidebar.vue';
@@ -20,10 +21,18 @@ import MainContent from './components/boardContent/MainContent.vue';
 import Modal from './components/common/Modal.vue';
 import ShowSidebar from '@/assets/images/icon-show-sidebar.svg?component';
 import { useHideSidebar } from '@/stores/appGlobals';
+import { useBoardsStore } from '@/stores/boards';
 
 const sidebarStore = useHideSidebar();
 const { hideSidebar } = storeToRefs(sidebarStore);
 const { handleShowSidebar } = sidebarStore;
+
+const boardsStore = useBoardsStore();
+const { fetchBoards } = boardsStore;
+
+onMounted(async () => {
+  await fetchBoards();
+})
 </script>
 
 <style scoped lang="less">

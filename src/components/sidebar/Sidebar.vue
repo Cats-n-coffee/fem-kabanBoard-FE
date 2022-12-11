@@ -5,17 +5,14 @@
             <h2>All Boards (3)</h2>
             <div class="all-boards-actions">
                 <ul>
-                    <li>
+                    <li
+                      v-for="{ id, name } in boards"
+                      :key="id"
+                      @click="setCurrentBoard(id)"
+                      :class="{ active: currentBoard.id === id }"
+                    >
                         <BoardIcon />
-                        <span>item 1</span>
-                    </li>
-                    <li>
-                        <BoardIcon />
-                        <span>item 2</span>
-                    </li>
-                    <li>
-                        <BoardIcon />
-                        <span>item 3</span>
+                        <span>{{ name }}</span>
                     </li>
                 </ul>
                 <button class="create-board-button">
@@ -37,15 +34,24 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import ThemeSwitcher from './ThemeSwitcher.vue';
 import Logo from '@/components/common/Logo.vue';
 import BoardIcon from '@/components/icons/BoardIcon.vue';
 import PlusIcon from '@/components/icons/PlusIcon.vue';
 import HideSidebarIcon from '@/assets/images/icon-hide-sidebar.svg?component';
 import { useHideSidebar } from '@/stores/appGlobals';
+import { useBoardsStore, useCurrentBoard } from '@/stores/boards';
 
 const sidebarStore = useHideSidebar();
 const { handleHideSidebar } = sidebarStore;
+
+const boardsStore = useBoardsStore();
+const { boards } = storeToRefs(boardsStore);
+
+const currentBoardStore = useCurrentBoard();
+const { currentBoard } = storeToRefs(currentBoardStore);
+const { setCurrentBoard } = currentBoardStore;
 
 defineProps<{
     hideSidebar: boolean,
@@ -162,6 +168,19 @@ defineProps<{
 
             :deep(svg path) {
                 fill: var(--primary);
+            }
+        }
+
+        &.active {
+            background-color: var(--primary);
+            border-radius: 0 100px 100px 0;
+
+            span {
+                color: var(--white);
+            }
+
+            :deep(svg path) {
+                fill: var(--white);
             }
         }
     }
