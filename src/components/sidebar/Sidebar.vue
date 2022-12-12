@@ -113,6 +113,8 @@ const setCurrentBoardState = (id: string, name: string) => {
 
 .sidebar-main {
     min-width: 250px;
+    max-width: 265px;
+    width: 100%;
     background-color: var(--light);
     padding-top: 16px;
     padding-bottom: 16px;
@@ -135,6 +137,7 @@ const setCurrentBoardState = (id: string, name: string) => {
         align-items: flex-start;
         justify-content: flex-end;
         padding-bottom: 0;
+        padding-right: 24px;
         margin-top: 0;
 
         h2 {
@@ -145,6 +148,7 @@ const setCurrentBoardState = (id: string, name: string) => {
 
 .all-boards-actions {
     width: 100%;
+    padding-right: 24px;
 
     ul {
         width: 100%;
@@ -193,6 +197,7 @@ const setCurrentBoardState = (id: string, name: string) => {
 
     @media screen and (min-width: 700px) {
         margin-bottom: auto;
+        padding-right: 0;
     }
 }
 
