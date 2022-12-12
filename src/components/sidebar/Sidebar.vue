@@ -8,7 +8,7 @@
                     <li
                       v-for="{ id, name } in boards"
                       :key="id"
-                      @click="setCurrentBoard(id)"
+                      @click="setCurrentBoardState(id, name)"
                       :class="{ active: currentBoard.id === id }"
                     >
                         <BoardIcon />
@@ -48,6 +48,7 @@ const { handleHideSidebar } = sidebarStore;
 
 const boardsStore = useBoardsStore();
 const { boards } = storeToRefs(boardsStore);
+const { getColumnTasks } = boardsStore;
 
 const currentBoardStore = useCurrentBoard();
 const { currentBoard } = storeToRefs(currentBoardStore);
@@ -56,6 +57,11 @@ const { setCurrentBoard } = currentBoardStore;
 defineProps<{
     hideSidebar: boolean,
 }>()
+
+const setCurrentBoardState = (id: string, name: string) => {
+    setCurrentBoard(id, name);
+    getColumnTasks();
+}
 </script>
 
 <style scoped lang="less">

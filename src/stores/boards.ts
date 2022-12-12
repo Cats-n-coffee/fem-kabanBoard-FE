@@ -1,5 +1,5 @@
 import { ref, type Ref } from 'vue';
-import { defineStore } from 'pinia';
+import { defineStore, storeToRefs } from 'pinia';
 
 interface BoardsOnlyType {
     id: string,
@@ -20,6 +20,10 @@ export const useBoardsStore = defineStore('boards', () => {
     const allBoards: Ref<AllBoardType> = ref({ boards: [] });
     const boards: Ref<BoardsOnlyType[]> = ref([]);
     const columnsAndTasks = ref([]);
+
+    const currentBoardStore = useCurrentBoard();
+    const { currentBoard } = storeToRefs(currentBoardStore);
+    const { setCurrentBoard } = currentBoardStore;
 
     const fetchBoards = async () => {
         const response = await fetch('./data.json');
@@ -46,10 +50,15 @@ export const useBoardsStore = defineStore('boards', () => {
     const getTasks = () => { };
 
     const getColumnTasks = () => {
-
+        columnsAndTasks.value = [];
+        allBoards.value.boards.forEach((board) => {
+            if (board.id === currentBoard.value.id) {
+                columnsAndTasks.value.push(...board.columns);
+            }
+        })
     };
 
-    const setTaskColumn = () => { }; // status
+    const setTaskColumn = () => {}; // status
 
     const setTaskTitle = () => { };
 
@@ -70,28 +79,31 @@ export const useBoardsStore = defineStore('boards', () => {
         getBoards();
 
         if (boards.value.length) {
-            const currentBoardStore = useCurrentBoard();
-            currentBoardStore.setCurrentBoard(boards.value[0].id);
+            setCurrentBoard(boards.value[0].id, boards.value[0].name);
+            getColumnTasks();
         }
     }
 
     return {
         allBoards,
-        fetchBoards,
         boards,
+        columnsAndTasks,
+        fetchBoards,
         getBoards,
+        getColumnTasks,
     };
 });
 
 export const useCurrentBoard = defineStore('currentBoard', () => {
-    const currentBoard: Ref<{ id: string }> = ref({ id: '' });
+    const currentBoard: Ref<BoardsOnlyType> = ref({ id: '', name: '' });
 
     const getCurrentBoard = () => {
         return currentBoard.value;
     };
 
-    const setCurrentBoard = (id: string) => {
+    const setCurrentBoard = (id: string, name: string) => {
         currentBoard.value.id = id;
+        currentBoard.value.name = name;
     };
 
     return {
