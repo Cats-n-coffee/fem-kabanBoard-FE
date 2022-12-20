@@ -15,5 +15,6 @@ import Columns from './Columns.vue';
     height: 100%;
     background-color: var(--dark);
     padding: 24px 0 0 24px;
+    overflow: scroll;
 }
 </style>

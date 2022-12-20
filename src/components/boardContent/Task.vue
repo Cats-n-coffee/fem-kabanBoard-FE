@@ -3,6 +3,8 @@
       v-for="{ id, title, subtasks } in tasks"
       :key="id"
       class="task"
+      draggable="true"
+      @dragstart="handleDragStart($event, id)"
     >
         <p class="task-title">{{ title }}</p>
         <p class="subtasks-count">{{ subtasks.length }} of subtasks</p>
@@ -20,11 +22,26 @@ export interface TaskType {
 
 export interface Props {
     tasks?: TaskType[],
+    columnId: string,
 }
 
 const props = withDefaults(defineProps<Props>(), {
     tasks: () => [],
+    columnId: '',
 });
+
+const handleDragStart = (event: {
+dataTransfer: any;
+target: any; preventDefault: () => void; 
+}, taskId: string) => {
+    event.target.classList.add('drag-enter');
+    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData(
+        'itemId',
+        JSON.stringify({ taskId, oldColumnId: props.columnId})
+    );
+}
 </script>
 
 <style scoped lang="less">

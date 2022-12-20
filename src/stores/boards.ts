@@ -1,15 +1,29 @@
 import { ref, type Ref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 
-interface BoardsOnlyType {
+interface TaskType {
+    description: string,
+    id: string,
+    title: string,
+    subtasks: [],
+    status: string,
+}
+
+interface ColumnType {
     id: string,
     name: string,
+    tasks: TaskType[],
 }
 
 interface BoardsType {
     id: string,
     name: string,
-    columns: [],
+    columns: ColumnType[],
+}
+
+interface BoardsOnlyType {
+    id: string,
+    name: string,
 }
 
 interface AllBoardType {
@@ -19,7 +33,7 @@ interface AllBoardType {
 export const useBoardsStore = defineStore('boards', () => {
     const allBoards: Ref<AllBoardType> = ref({ boards: [] });
     const boards: Ref<BoardsOnlyType[]> = ref([]);
-    const columnsAndTasks = ref([]);
+    const columnsAndTasks: Ref<ColumnType[]> = ref([]);
 
     const currentBoardStore = useCurrentBoard();
     const { currentBoard } = storeToRefs(currentBoardStore);
@@ -29,7 +43,7 @@ export const useBoardsStore = defineStore('boards', () => {
         const response = await fetch('./data.json');
         const jsonBoards = await response.json();
         allBoards.value = jsonBoards;
-        console.log('all', allBoards.value);
+
         // add localStorage
         prepareStateAfterFetch();
         return jsonBoards;
@@ -41,13 +55,43 @@ export const useBoardsStore = defineStore('boards', () => {
         );
     };
 
-    const setBoards = () => { };
+    const setBoards = () => {
+        const currentBoardId = currentBoard.value.id;
+
+        allBoards.value.boards.forEach((board) => {
+            if (currentBoardId === board.id) {
+                board.columns = columnsAndTasks.value;
+            }
+        })
+    };
 
     const getColumns = () => { };
 
     const setColumns = () => { };
 
-    const getTasks = () => { };
+    // Returns the task obj and removes from original column
+    const getTaskAndRemove = (taskId: string, columnId: string): TaskType => {
+        let wholeTask: TaskType = {
+            description: '',
+            id: '',
+            title: '',
+            subtasks: [],
+            status: '',
+        };
+    
+        columnsAndTasks.value.forEach((column) => {
+            if (columnId === column.id) {
+                column.tasks.forEach((task: TaskType) => {
+                    if (taskId === task.id) {
+                        wholeTask = task;
+                        deleteTask(taskId, columnId);
+                    }
+                })
+            }
+        });
+
+        return wholeTask;
+    };
 
     const getColumnTasks = () => {
         columnsAndTasks.value = [];
@@ -58,7 +102,22 @@ export const useBoardsStore = defineStore('boards', () => {
         })
     };
 
-    const setTaskColumn = () => {}; // status
+    // updates task's column id (drag/drop or dropdown)
+    // use filter to remove task from old column
+    // need to take the whole task to move it
+    const setTaskColumn = (
+        taskId: string,
+        newColumnId: string,
+        oldColumnId: string
+    ) => { 
+        const retreivedTask: TaskType = getTaskAndRemove(taskId, oldColumnId);
+        console.log(retreivedTask);
+        columnsAndTasks.value.forEach((column) => {
+            if (newColumnId === column.id) { // need to change the task id
+                column.tasks.push(retreivedTask);
+            }
+        })
+    }; // status
 
     const setTaskTitle = () => { };
 
@@ -70,7 +129,16 @@ export const useBoardsStore = defineStore('boards', () => {
 
     const deleteColumn = () => { };
 
-    const deleteTask = () => { };
+    const deleteTask = (taskId: string, columnId: string) => {
+        columnsAndTasks.value.forEach((column) => {
+            if (columnId === column.id) {
+                const filteredTasks = column.tasks.filter(
+                    (task: TaskType) => task.id !== taskId,
+                );
+                column.tasks = filteredTasks;
+            }
+        })
+    };
 
     // add more methods to get the numbers for each?
     // break for tasks/columns/boards?
@@ -91,6 +159,7 @@ export const useBoardsStore = defineStore('boards', () => {
         fetchBoards,
         getBoards,
         getColumnTasks,
+        setTaskColumn,
     };
 });
 
