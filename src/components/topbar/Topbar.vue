@@ -43,18 +43,25 @@ import VerticalEllipsisIcon from '@/assets/images/icon-vertical-ellipsis.svg?com
 import ChevronDownIcon from '@/assets/images/icon-chevron-down.svg?component';
 import LogoMobile from '@/assets/images/logo-mobile.svg?component';
 import { useHideSidebar } from '@/stores/appGlobals';
+import { useAppModal } from '@/stores/appGlobals';
 
 defineProps<{
     msg: string
 }>()
 
+// Sidebar
 const sidebarStore = useHideSidebar();
 const { hideSidebar } = storeToRefs(sidebarStore);
 const { handleSidebarMobile } = sidebarStore;
 const isBoardActionOpen = ref(false);
 
+// Modals
+const appModalStore = useAppModal();
+const { toggleModal, setModalName } = appModalStore;
+
 const addNewTaskHandler = () => {
-    console.log('add task');
+    toggleModal();
+    setModalName('addTask');
 };
 
 const showMoreActions = () => {

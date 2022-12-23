@@ -1,11 +1,16 @@
 <template>
-  <Modal />
+  <Modal v-if="isModalOpen" />
   <TransitionGroup name="list">
     <Sidebar :hide-sidebar="hideSidebar" key="sidebar-1" />
     <div class="persistent-content" key="content-1">
       <TopbarVue msg="prop msg" />
       <MainContent />
-      <button v-if="hideSidebar" @click="handleShowSidebar" class="sidebar-show" aria-label="show sidebar">
+      <button
+        v-if="hideSidebar"
+        @click="handleShowSidebar"
+        class="sidebar-show"
+        aria-label="show sidebar"
+      >
         <ShowSidebar />
       </button>
     </div>
@@ -22,6 +27,7 @@ import Modal from './components/common/Modal.vue';
 import ShowSidebar from '@/assets/images/icon-show-sidebar.svg?component';
 import { useHideSidebar } from '@/stores/appGlobals';
 import { useBoardsStore } from '@/stores/boards';
+import { useAppModal } from '@/stores/appGlobals';
 
 const sidebarStore = useHideSidebar();
 const { hideSidebar } = storeToRefs(sidebarStore);
@@ -29,6 +35,9 @@ const { handleShowSidebar } = sidebarStore;
 
 const boardsStore = useBoardsStore();
 const { fetchBoards } = boardsStore;
+
+const appModalStore = useAppModal();
+const { isModalOpen } = storeToRefs(appModalStore);
 
 onMounted(async () => {
   await fetchBoards();

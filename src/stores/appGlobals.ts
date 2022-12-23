@@ -42,3 +42,24 @@ export const useHideSidebar = defineStore('sidebar', () => {
         handleSidebarMobile
     };
 });
+
+export const useAppModal = defineStore('modal', () => {
+    const isModalOpen = ref(false);
+    const modalName = ref('');
+
+    const toggleModal = () => {
+        isModalOpen.value = !isModalOpen.value;
+        if (!isModalOpen.value) modalName.value = '';
+    }
+
+    const setModalName = (name: string) => {
+        modalName.value = name;
+    }
+
+    return {
+        isModalOpen,
+        toggleModal,
+        modalName,
+        setModalName,
+    };
+})
