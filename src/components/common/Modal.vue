@@ -2,6 +2,7 @@
     <div class="modal">
         <button @click="toggleModal">close</button>
         <AddTaskModal v-if="modalName === 'addTask'"/>
+        <AddBoardModal v-if="modalName === 'addBoard'" />
     </div>
 </template>
 
@@ -9,6 +10,7 @@
 import { useAppModal } from '@/stores/appGlobals';
 import { storeToRefs } from 'pinia';
 import AddTaskModal from '../modals/AddTaskModal.vue';
+import AddBoardModal from '../modals/AddBoardModal.vue';
 
 const appModalStore = useAppModal();
 const { modalName } = storeToRefs(appModalStore);

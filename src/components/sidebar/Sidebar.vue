@@ -15,7 +15,7 @@
                         <span>{{ name }}</span>
                     </li>
                 </ul>
-                <button class="create-board-button">
+                <button class="create-board-button" @click="createBoard">
                     <BoardIcon fill="#635FC7" class="board-icon" />
                     <div>
                         <PlusIcon fill="#635FC7" />
@@ -40,7 +40,7 @@ import Logo from '@/components/common/Logo.vue';
 import BoardIcon from '@/components/icons/BoardIcon.vue';
 import PlusIcon from '@/components/icons/PlusIcon.vue';
 import HideSidebarIcon from '@/assets/images/icon-hide-sidebar.svg?component';
-import { useHideSidebar } from '@/stores/appGlobals';
+import { useHideSidebar, useAppModal } from '@/stores/appGlobals';
 import { useBoardsStore, useCurrentBoard } from '@/stores/boards';
 
 const sidebarStore = useHideSidebar();
@@ -54,6 +54,9 @@ const currentBoardStore = useCurrentBoard();
 const { currentBoard } = storeToRefs(currentBoardStore);
 const { setCurrentBoard } = currentBoardStore;
 
+const appModalStore = useAppModal();
+const { setModalName, toggleModal } = appModalStore;
+
 defineProps<{
     hideSidebar: boolean,
 }>()
@@ -61,6 +64,11 @@ defineProps<{
 const setCurrentBoardState = (id: string, name: string) => {
     setCurrentBoard(id, name);
     getColumnTasks();
+}
+
+const createBoard = () => {
+    toggleModal();
+    setModalName('addBoard');
 }
 </script>
 
