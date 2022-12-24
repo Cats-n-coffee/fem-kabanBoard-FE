@@ -1,5 +1,6 @@
 import { ref, type Ref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
+import { useCurrentBoard } from './current';
 
 interface TaskType {
     description: string,
@@ -161,23 +162,4 @@ export const useBoardsStore = defineStore('boards', () => {
         getColumnTasks,
         setTaskColumn,
     };
-});
-
-export const useCurrentBoard = defineStore('currentBoard', () => {
-    const currentBoard: Ref<BoardsOnlyType> = ref({ id: '', name: '' });
-
-    const getCurrentBoard = () => {
-        return currentBoard.value;
-    };
-
-    const setCurrentBoard = (id: string, name: string) => {
-        currentBoard.value.id = id;
-        currentBoard.value.name = name;
-    };
-
-    return {
-        currentBoard,
-        getCurrentBoard,
-        setCurrentBoard,
-    }
 });

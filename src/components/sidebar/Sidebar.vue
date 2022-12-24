@@ -41,7 +41,8 @@ import BoardIcon from '@/components/icons/BoardIcon.vue';
 import PlusIcon from '@/components/icons/PlusIcon.vue';
 import HideSidebarIcon from '@/assets/images/icon-hide-sidebar.svg?component';
 import { useHideSidebar, useAppModal } from '@/stores/appGlobals';
-import { useBoardsStore, useCurrentBoard } from '@/stores/boards';
+import { useBoardsStore } from '@/stores/boards';
+import { useCurrentBoard } from '@/stores/current';
 
 const sidebarStore = useHideSidebar();
 const { handleHideSidebar } = sidebarStore;
