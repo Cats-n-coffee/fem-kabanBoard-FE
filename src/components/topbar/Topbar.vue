@@ -3,7 +3,7 @@
         <h1 v-if="hideSidebar">
             <Logo />
         </h1>
-        <div class="persistent-bar">
+        <div class="persistent-bar" :class="{ reduced: !hideSidebar}">
             <div class="board-title-action">
                 <LogoMobile class="logo-mobile" />
                 <h2>Board name</h2>
@@ -81,6 +81,7 @@ const showDeleteBoardModal = () => {
 
 <style scoped lang="less">
 .topbar {
+    width: 100%;
     display: flex;
     align-items: center;
     background-color: var(--light);
@@ -97,6 +98,10 @@ const showDeleteBoardModal = () => {
     @media screen and (min-width: 700px) {
         border-left: 1px solid var(--medium);
         padding: 16px 24px;
+
+        &.reduced {
+            width: calc(100vw - 250px);
+        }
     }
 }
 

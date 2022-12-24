@@ -4,6 +4,7 @@
       :key="id"
       class="task"
       draggable="true"
+      @click="setCurrentTask(id, columnId)"
       @dragstart="handleDragStart($event, id)"
     >
         <p class="task-title">{{ title }}</p>
@@ -12,6 +13,9 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { useCurrentTask } from '@/stores/current.ts';
+
 export interface TaskType {
     title: string,
     description: string,
@@ -31,8 +35,8 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const handleDragStart = (event: {
-dataTransfer: any;
-target: any; preventDefault: () => void; 
+  dataTransfer: any;
+  target: any; preventDefault: () => void; 
 }, taskId: string) => {
     event.target.classList.add('drag-enter');
     event.dataTransfer.dropEffect = 'move';
@@ -42,6 +46,9 @@ target: any; preventDefault: () => void;
         JSON.stringify({ taskId, oldColumnId: props.columnId})
     );
 }
+
+const currentTaskStore = useCurrentTask();
+const { setCurrentTask } = currentTaskStore;
 </script>
 
 <style scoped lang="less">
@@ -51,6 +58,14 @@ target: any; preventDefault: () => void;
     box-shadow: var(--shadow);
     width: 100%;
     padding: 23px 16px;
+
+    &:hover {
+        cursor: pointer;
+
+        .task-title {
+            color: var(--primary);
+        }
+    }
 }
 
 .task-title {

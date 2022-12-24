@@ -50,8 +50,8 @@ const handleDragEnter = (event: DragEvent, columnId: string) => {
 
 <style scoped lang="less">
 .column {
-    max-width: 280px;
-    width: 100%;
+    min-width: 280px;
+    width: 280px;
 
     h3 {
         padding-bottom: 24px;

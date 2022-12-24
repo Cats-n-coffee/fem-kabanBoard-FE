@@ -1,5 +1,6 @@
 import { ref, type Ref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
+import { useBoardsStore } from '@/stores/boards.ts';
 
 interface SubTaskType {
     title: string,
@@ -39,6 +40,9 @@ export const useCurrentBoard = defineStore('currentBoard', () => {
 });
 
 export const useCurrentTask = defineStore('currentTask', () => {
+    const boardsStore = useBoardsStore();
+    const { getEditTask } = boardsStore;
+
     const currentTask: Ref<TaskType> = ref({
         description: '',
         id: '',
@@ -47,5 +51,13 @@ export const useCurrentTask = defineStore('currentTask', () => {
         status: '',
     });
 
-    return { currentTask }
+    const setCurrentTask = (taskId: string, columnId: string) => {
+        const fullTask = getEditTask(taskId, columnId);
+        currentTask.value = fullTask;
+    }; 
+
+    return {
+        currentTask,
+        setCurrentTask,
+    }
 });

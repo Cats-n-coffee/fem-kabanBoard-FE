@@ -2,6 +2,11 @@ import { ref, type Ref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 import { useCurrentBoard } from './current';
 
+interface SubTaskType {
+    title: string,
+    isCompleted: boolean,
+}
+
 interface TaskType {
     description: string,
     id: string,
@@ -120,11 +125,31 @@ export const useBoardsStore = defineStore('boards', () => {
         })
     }; // status
 
-    const setTaskTitle = () => { };
+    const getEditTask = (taskId: string, columnId: string): TaskType => {
+        let wholeTask: TaskType = {
+            description: '',
+            id: '',
+            title: '',
+            subtasks: [],
+            status: '',
+        };
+    
+        columnsAndTasks.value.forEach((column) => {
+            if (columnId === column.id) {
+                column.tasks.forEach((task: TaskType) => {
+                    if (taskId === task.id) {
+                        wholeTask = task;
+                    }
+                })
+            }
+        });
 
-    const setTaskSubtasks = () => { };
+        return wholeTask;
+    };
 
-    const setTaskDescription = () => { };
+    const setEditTask = (taskId: string, columnId: string) => {
+
+    }
 
     const deleteBoard = () => { };
 
@@ -161,5 +186,6 @@ export const useBoardsStore = defineStore('boards', () => {
         getBoards,
         getColumnTasks,
         setTaskColumn,
+        getEditTask,
     };
 });
