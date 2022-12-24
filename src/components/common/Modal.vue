@@ -1,10 +1,11 @@
 <template>
     <div class="modal">
         <button @click="toggleModal">close</button>
-        <AddTaskModal v-if="modalName === 'addTask'"/>
+        <AddTaskModal v-if="modalName === 'addTask'" />
         <AddBoardModal v-if="modalName === 'addBoard'" />
         <EditBoardModal v-if="modalName === 'editBoard'"/>
         <DeleteBoardModal v-if="modalName === 'deleteBoard'" />
+        <TaskViewModal v-if="modalName === 'viewTask'" />
     </div>
 </template>
 
@@ -14,6 +15,7 @@ import AddTaskModal from '@/components/modals/AddTaskModal.vue';
 import AddBoardModal from '@/components/modals/AddBoardModal.vue';
 import EditBoardModal from '@/components/modals/EditBoardModal.vue';
 import DeleteBoardModal from '@/components/modals/DeleteBoardModal.vue';
+import TaskViewModal from '@/components/modals/TaskViewModal.vue';
 import { useAppModal } from '@/stores/appGlobals';
 
 const appModalStore = useAppModal();

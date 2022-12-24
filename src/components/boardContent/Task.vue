@@ -4,7 +4,7 @@
       :key="id"
       class="task"
       draggable="true"
-      @click="setCurrentTask(id, columnId)"
+      @click="viewTask(id)"
       @dragstart="handleDragStart($event, id)"
     >
         <p class="task-title">{{ title }}</p>
@@ -14,7 +14,8 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useCurrentTask } from '@/stores/current.ts';
+import { useCurrentTask } from '@/stores/current';
+import { useAppModal } from '@/stores/appGlobals';
 
 export interface TaskType {
     title: string,
@@ -49,6 +50,15 @@ const handleDragStart = (event: {
 
 const currentTaskStore = useCurrentTask();
 const { setCurrentTask } = currentTaskStore;
+
+const appModalStore = useAppModal();
+const { toggleModal, setModalName } = appModalStore;
+
+const viewTask = (taskId: string) => {
+    setCurrentTask(taskId, props.columnId);
+    setModalName('viewTask');
+    toggleModal();
+};
 </script>
 
 <style scoped lang="less">
