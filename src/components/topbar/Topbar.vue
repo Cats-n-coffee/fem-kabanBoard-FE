@@ -69,11 +69,13 @@ const showMoreActions = () => {
 };
 
 const showEditBoardModal = () => {
-    console.log('edit board');
+    toggleModal();
+    setModalName('editBoard');
 }
 
 const showDeleteBoardModal = () => {
-    console.log('delete board');
+    toggleModal();
+    setModalName('deleteBoard');
 }
 </script>
 

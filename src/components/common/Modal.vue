@@ -3,14 +3,18 @@
         <button @click="toggleModal">close</button>
         <AddTaskModal v-if="modalName === 'addTask'"/>
         <AddBoardModal v-if="modalName === 'addBoard'" />
+        <EditBoardModal v-if="modalName === 'editBoard'"/>
+        <DeleteBoardModal v-if="modalName === 'deleteBoard'" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { useAppModal } from '@/stores/appGlobals';
 import { storeToRefs } from 'pinia';
-import AddTaskModal from '../modals/AddTaskModal.vue';
-import AddBoardModal from '../modals/AddBoardModal.vue';
+import AddTaskModal from '@/components/modals/AddTaskModal.vue';
+import AddBoardModal from '@/components/modals/AddBoardModal.vue';
+import EditBoardModal from '@/components/modals/EditBoardModal.vue';
+import DeleteBoardModal from '@/components/modals/DeleteBoardModal.vue';
+import { useAppModal } from '@/stores/appGlobals';
 
 const appModalStore = useAppModal();
 const { modalName } = storeToRefs(appModalStore);
