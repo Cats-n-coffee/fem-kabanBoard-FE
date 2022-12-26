@@ -1,8 +1,12 @@
 <template>
-    <fieldset class="fieldset-input-locked">
-        <label :for="forAttr">{{ label }}</label>
+    <fieldset class="form-fieldset">
+        <label :for="forAttr" class="form-label">{{ label }}</label>
         <div>
-            <input type="text" :id="forAttr">
+            <input
+              type="text"
+              :id="forAttr"
+              class="form-input"
+            >
         </div>
         <Button :click-handler="clickHandler">
             <template #icon>{{ buttonIcon }}</template>

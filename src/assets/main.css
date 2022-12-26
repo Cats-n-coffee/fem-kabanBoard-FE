@@ -44,6 +44,7 @@ body[data-theme="light"] {
   --button-secondary-hover: rgba(99, 95, 199, 0.25);
   --form-label: #828FA3;
   --board-actions: #FFFFFF;
+  --form-input: rgba(0, 1, 18, 0.25);
 }
 
 body[data-theme="dark"] {
@@ -57,6 +58,7 @@ body[data-theme="dark"] {
   --button-secondary-hover: #FFFFFF;
   --form-label: #FFFFFF;
   --board-actions: #20212C;
+  --form-input: rgba(255, 255, 255, 0.25);
 }
 
 #app {
@@ -66,4 +68,32 @@ body[data-theme="dark"] {
   justify-content: space-between;
   position: relative;
   background-color: var(--light);
+}
+
+/* =============== shared styles =============== */
+.form-fieldset {
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--form-label);
+  padding-top: 24px;
+  padding-bottom: 8px;
+}
+
+.form-input {
+  border: 1px solid var(--form-input);
+  border-radius: 4px;
+  padding: 8px 8px 8px 16px;
+}
+
+.form-input::placeholder {
+  color: var(--form-input);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font-family);
 }

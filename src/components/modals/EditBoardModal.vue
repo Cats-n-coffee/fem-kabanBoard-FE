@@ -4,7 +4,10 @@
             Edit Board
         </template>
         <template #formType>
-            <FormInputField label="Board Name" for-attr="edit-board-title"/>
+            <FormInputField
+              label="Board Name"
+              for-attr="edit-board-title"
+            />
             <FormInputInteractive
               label="Board Columns"
               for-attr="edit-board-input-interactive"

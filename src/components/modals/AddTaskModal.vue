@@ -4,8 +4,16 @@
             Add New Task
         </template>
         <template #formType>
-            <FormInputField label="Title" for-attr="new-task-title"/>
-            <FormTextarea label="Description" for-attr="new-task-description"/>
+            <FormInputField
+              label="Title"
+              for-attr="new-task-title"
+              placeholderText="e.g. Take coffee break"
+            />
+            <FormTextarea
+              label="Description"
+              for-attr="new-task-description"
+              :placeholderText="textareaPlaceholder"
+            />
             <FormInputInteractive
               label="Subtasks"
               for-attr="new-task-input-interactive"
@@ -32,6 +40,9 @@ import FormInputInteractive from '@/components/common/FormInputInteractive.vue';
 import FormTextarea from '@/components/common/FormTextarea.vue';
 import FormSelect from '@/components/common/FormSelect.vue';
 import Button from '@/components/common/Button.vue';
+
+const textareaPlaceholder = 'e.g. It’s always good to take a break. '
+    + 'This 15 minute break will recharge the batteries a little.';
 
 const addSubtask = () => {
     console.log('add subtask');

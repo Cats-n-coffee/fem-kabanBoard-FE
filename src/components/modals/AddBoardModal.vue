@@ -4,7 +4,11 @@
             Add New Board
         </template>
         <template #formType>
-            <FormInputField label="Name" for-attr="new-board-title"/>
+            <FormInputField
+              label="Name"
+              for-attr="new-board-title"
+              placeholder-text="e.g. Web Design"
+            />
             <FormInputInteractive
               label="Columns"
               for-attr="new-board-input-interactive"

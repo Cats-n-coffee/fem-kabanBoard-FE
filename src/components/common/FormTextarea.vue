@@ -1,7 +1,13 @@
 <template>
-    <fieldset class="fieldset-textarea">
-        <label :for="forAttr">{{ label }}</label>
-        <textarea :id="forAttr" cols="30" rows="10"></textarea>
+    <fieldset class="form-fieldset">
+        <label :for="forAttr" class="form-label">{{ label }}</label>
+        <textarea
+          :id="forAttr"
+          class="form-input"
+          cols="30"
+          rows="10"
+          :placeholder="placeholderText"
+        ></textarea>
     </fieldset>
 </template>
 
@@ -9,10 +15,12 @@
 export interface Props {
     label: string,
     forAttr: string,
+    placeholderText: string,
 }
 
 withDefaults(defineProps<Props>(), {
     label: '',
     forAttr: 'form-label',
+    placeholderText: '',
 });
 </script>
