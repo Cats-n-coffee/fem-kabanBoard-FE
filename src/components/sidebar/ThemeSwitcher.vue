@@ -22,7 +22,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useSwitchTheme } from '@/stores/appGlobals';
-import { storeToRefs } from 'pinia';
 import LightTheme from '@/assets/images/icon-light-theme.svg?component';
 import DarkTheme from '@/assets/images/icon-dark-theme.svg?component';
 

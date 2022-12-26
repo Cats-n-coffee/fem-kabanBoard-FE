@@ -18,17 +18,12 @@
                         <span class="action-add-task-span">Add New Task</span>
                     </template>
                 </Button>
-                <button @click="showMoreActions" class="more-actions">
-                    <VerticalEllipsisIcon />
-                </button>
-                <div class="board-actions-menu" :class="{ show: isBoardActionOpen }">
-                    <button class="action-edit-board" @click="showEditBoardModal">
-                        Edit Board
-                    </button>
-                    <button class="action-delete-board" @click="showDeleteBoardModal">
-                        Delete Board
-                    </button>
-                </div>
+                <EllipsisButton
+                  :show-edit-modal="showEditBoardModal"
+                  :show-delete-modal="showDeleteBoardModal"
+                  edit-action-text="Edit Board"
+                  delete-action-text="Delete Board"
+                />
             </div>
         </div>
     </div>
@@ -39,9 +34,9 @@ import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import Button from '@/components/common/Button.vue';
 import Logo from '@/components/common/Logo.vue';
-import VerticalEllipsisIcon from '@/assets/images/icon-vertical-ellipsis.svg?component';
 import ChevronDownIcon from '@/assets/images/icon-chevron-down.svg?component';
 import LogoMobile from '@/assets/images/logo-mobile.svg?component';
+import EllipsisButton from '@/components/common/EllipsisButton.vue';
 import { useHideSidebar } from '@/stores/appGlobals';
 import { useAppModal } from '@/stores/appGlobals';
 
@@ -53,7 +48,6 @@ defineProps<{
 const sidebarStore = useHideSidebar();
 const { hideSidebar } = storeToRefs(sidebarStore);
 const { handleSidebarMobile } = sidebarStore;
-const isBoardActionOpen = ref(false);
 
 // Modals
 const appModalStore = useAppModal();
@@ -62,10 +56,6 @@ const { toggleModal, setModalName } = appModalStore;
 const addNewTaskHandler = () => {
     toggleModal();
     setModalName('addTask');
-};
-
-const showMoreActions = () => {
-    isBoardActionOpen.value = !isBoardActionOpen.value;
 };
 
 const showEditBoardModal = () => {

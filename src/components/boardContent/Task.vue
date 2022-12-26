@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
 import { useCurrentTask } from '@/stores/current';
 import { useAppModal } from '@/stores/appGlobals';
 
