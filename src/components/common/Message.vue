@@ -30,9 +30,10 @@
         font-size: 13px;
         font-weight: 500;
         padding: 24px 0;
+        line-height: 23px;
     }
 
-    @media screeen and (min-width: 700px) {
+    @media screen and (min-width: 700px) {
         padding: 32px;
     }
 }

@@ -17,7 +17,7 @@
             />
         </template>
         <template #submitButton>
-            <Button :click-handler="editBoard">
+            <Button class="submit-button" :click-handler="editBoard">
                 <template #label>
                     <span class="action-add-board-span">Save Changes</span>
                 </template>
@@ -40,3 +40,9 @@ const editBoard = () => {
     console.log('edit board');
 }
 </script>
+
+<style scoped lang="less">
+.submit-button {
+    margin-top: 24px;
+}
+</style>
