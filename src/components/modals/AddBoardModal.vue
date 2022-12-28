@@ -18,7 +18,7 @@
             />
         </template>
         <template #submitButton>
-            <Button :click-handler="createBoard">
+            <Button class="submit-button" :click-handler="createBoard">
                 <template #label>
                     <span class="action-add-board-span">Create New Board</span>
                 </template>
@@ -41,3 +41,9 @@ const createBoard = () => {
     console.log('create new board');
 }
 </script>
+
+<style scoped lang="less">
+.submit-button {
+    margin-top: 24px;
+}
+</style>

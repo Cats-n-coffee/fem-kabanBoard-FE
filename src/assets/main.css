@@ -1,5 +1,5 @@
 /*
-tablet: 600px
+tablet: 700px
 desktop: 1000px
 */
 
@@ -13,6 +13,7 @@ desktop: 1000px
   --light-red: #FF9898;
   --button-secondary-font: #635FC7;
   --white: #FFFFFF;
+  --blur: rgba(0, 0, 0, 0.5);
 }
 
 *,
@@ -39,7 +40,6 @@ body[data-theme="light"] {
   --medium-gradient: linear-gradient(180deg, #E9EFFA 0%, rgba(233, 239, 250, 0.5) 100%);
   --dark: #F4F7FD;
   --font-primary: #000112;
-  --blur: rgba(0, 0, 0, 0.5);
   --button-secondary: rgba(99, 95, 199, 0.1);
   --button-secondary-hover: rgba(99, 95, 199, 0.25);
   --form-label: #828FA3;
@@ -53,7 +53,6 @@ body[data-theme="dark"] {
   --medium-gradient: linear-gradient(180deg, rgba(43, 44, 55, 0.25) 0%, rgba(43, 44, 55, 0.125) 100%);
   --dark: #20212C;
   --font-primary: #FFFFFF;
-  --blur: #20212C;
   --button-secondary: #FFFFFF;
   --button-secondary-hover: #FFFFFF;
   --form-label: #FFFFFF;

@@ -24,7 +24,7 @@
             <FormSelect label="Status" for-attr="new-task-select" />
         </template>
         <template #submitButton>
-            <Button :click-handler="createTask">
+            <Button class="submit-button" :click-handler="createTask">
                 <template #label>
                     <span class="action-add-task-span">Create Task</span>
                 </template>
@@ -64,5 +64,9 @@ const createTask = () => {
 fieldset {
     display: flex;
     flex-direction: column;
+}
+
+.submit-button {
+    margin-top: 24px;
 }
 </style>
