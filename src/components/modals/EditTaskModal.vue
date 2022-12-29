@@ -1,32 +1,31 @@
 <template>
     <Form>
         <template #title>
-            Add New Task
+            Edit Task
         </template>
         <template #formType>
             <FormInputField
-              label="Title"
-              for-attr="new-task-title"
-              placeholderText="e.g. Take coffee break"
+                label="Title"
+                for-attr="edit-task-title"
             />
             <FormTextarea
-              label="Description"
-              for-attr="new-task-description"
-              :placeholderText="textareaPlaceholder"
+                label="Description"
+                for-attr="edit-task-description"
+                :placeholder-text="textareaPlaceholder"
             />
             <FormInputInteractive
               label="Subtasks"
-              for-attr="new-task-input-interactive"
+              for-attr="edit-task-input-interactive"
               :click-handler="addSubtask"
               button-icon="+"
               button-label="Add New Subtask"
             />
-            <FormSelect label="Status" for-attr="new-task-select" />
+            <FormSelect label="Status" for-attr="edit-task-select" />
         </template>
         <template #submitButton>
-            <Button class="submit-button" :click-handler="createTask">
+            <Button class="submit-button" :click-handler="saveChanges">
                 <template #label>
-                    <span class="action-add-task-span">Create Task</span>
+                    <span class="action-add-task-span">Save Changes</span>
                 </template>
             </Button>
         </template>
@@ -37,20 +36,20 @@
 import Form from '@/components/common/Form.vue';
 import FormInputField from '@/components/common/FormInputField.vue';
 import FormInputInteractive from '@/components/common/FormInputInteractive.vue';
-import FormTextarea from '@/components/common/FormTextarea.vue';
-import FormSelect from '@/components/common/FormSelect.vue';
+import FormSelect from '../common/FormSelect.vue';
+import FormTextarea from '../common/FormTextarea.vue';
 import Button from '@/components/common/Button.vue';
 
 const textareaPlaceholder = 'e.g. It’s always good to take a break. '
     + 'This 15 minute break will recharge the batteries a little.';
 
 const addSubtask = () => {
-    console.log('add subtask');
-}
+    console.log('edit task add subtask');
+};
 
-const createTask = () => {
-    console.log('create task');
-}
+const saveChanges = () => {
+    console.log('save task');
+};
 </script>
 
 <style scoped lang="less">
