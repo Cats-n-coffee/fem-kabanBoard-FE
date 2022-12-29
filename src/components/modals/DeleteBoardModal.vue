@@ -11,7 +11,7 @@
             <div class="side-by-side-actions">
                 <Button :click-handler="deleteBoard" class-color="red">
                     <template #label>
-                        <span class="action-delete-board-span">Delete</span>
+                        <span class="action-delete-span">Delete</span>
                     </template>
                 </Button>
                 <Button :click-handler="toggleModal" class-color="light">
@@ -43,7 +43,7 @@ const deleteBoard = () => {
     gap: 16px;
 }
 
-:deep(.action-delete-board-task) {
+:deep(.action-delete-span) {
     color: var(--white);
 }
 
