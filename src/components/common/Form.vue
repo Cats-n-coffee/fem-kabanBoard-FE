@@ -3,7 +3,7 @@
         <h2>
             <slot name="title"></slot>
         </h2>
-        <form>
+        <form @submit.prevent>
             <slot name="formType"></slot>
             <slot name="submitButton"></slot>
         </form>

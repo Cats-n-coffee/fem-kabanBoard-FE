@@ -20,6 +20,7 @@
               :click-handler="addSubtask"
               button-icon="+"
               button-label="Add New Subtask"
+              :placeholder-subtask="true"
             />
             <FormSelect label="Status" for-attr="new-task-select" />
         </template>

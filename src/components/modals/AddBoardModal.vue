@@ -15,6 +15,7 @@
               :click-handler="addColumn"
               button-icon="+"
               button-label="Add New Column"
+              :placeholder-subtask="true"
             />
         </template>
         <template #submitButton>
