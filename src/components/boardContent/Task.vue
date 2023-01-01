@@ -1,11 +1,12 @@
 <template>
     <div
-      v-for="{ id, title, subtasks } in tasks"
+      v-for="({ id, title, subtasks }, index) in tasks"
       :key="id"
       class="task"
       draggable="true"
       @click="viewTask(id)"
       @dragstart="handleDragStart($event, id)"
+      :data-task-hovered-index="index"
     >
         <p class="task-title">{{ title }}</p>
         <p class="subtasks-count">{{ subtasks.length }} of subtasks</p>
@@ -36,7 +37,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const handleDragStart = (event: {
   dataTransfer: any;
-  target: any; preventDefault: () => void; 
+  target: any;
+  preventDefault: () => void; 
 }, taskId: string) => {
     event.target.classList.add('drag-enter');
     event.dataTransfer.dropEffect = 'move';

@@ -49,7 +49,7 @@ const { handleHideSidebar } = sidebarStore;
 
 const boardsStore = useBoardsStore();
 const { boards } = storeToRefs(boardsStore);
-const { getColumnTasks } = boardsStore;
+const { getColumnsAndTasks } = boardsStore;
 
 const currentBoardStore = useCurrentBoard();
 const { currentBoard } = storeToRefs(currentBoardStore);
@@ -64,7 +64,7 @@ defineProps<{
 
 const setCurrentBoardState = (id: string, name: string) => {
     setCurrentBoard(id, name);
-    getColumnTasks();
+    getColumnsAndTasks();
 }
 
 const createBoard = () => {

@@ -16,7 +16,7 @@
                 <CloseIcon />
             </button>
         </div>
-        <Button :click-handler="addNewInput" class-color="light" class="add-button">
+        <Button :click-handler="addNewInput" class-color="light">
             <template #icon>
                 <span class="action-add-span">{{ buttonIcon }}</span>
             </template>
@@ -83,6 +83,7 @@ const subtasksToDisplay = computed(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 12px;
 }
 
 .form-input {
@@ -101,10 +102,6 @@ const subtasksToDisplay = computed(() => {
             fill: var(--red);
         }
     }
-}
-
-.add-button {
-    margin-top: 12px;
 }
 
 :deep(.action-add-span) {

@@ -23,28 +23,54 @@ import { storeToRefs } from 'pinia';
 import { useBoardsStore } from '@/stores/boards';
 import Task from './Task.vue';
 
+export interface TaskType {
+    description: string,
+    id: string,
+    title: string,
+    subtasks: [],
+    status: string,
+}
+
+export interface ColumnType {
+    id: string,
+    name: string,
+    tasks: TaskType[],
+}
+
 const boardsStore = useBoardsStore();
 const { columnsAndTasks } = storeToRefs(boardsStore);
-const { setTaskColumn }= boardsStore;
+const { setTaskColumn, getColumn, setChangeTaskIndex }= boardsStore;
 
 const isDroppableItemActive = ref(false)
+let dropIndex: string;
 
 const handleDrop = (event: DragEvent, columnId: string) => {
     const itemData = event.dataTransfer?.getData('itemId');
     const { taskId, oldColumnId } = JSON.parse(itemData!);
 
     setTaskColumn(taskId, columnId, oldColumnId);
+
+    const column: ColumnType = getColumn(columnId);
+    setChangeTaskIndex(taskId, column, columnId, Number(dropIndex));
+
     isDroppableItemActive.value = false;
 }
 
-const handleDragEnter = (event: DragEvent, columnId: string) => {
+const handleDragEnter = (event: {
+    target: any;
+    preventDefault: () => void;
+}, columnId: string) => {
     event.preventDefault();
-    console.log('drag enter', columnId, event.target);
     isDroppableItemActive.value = true;
 
-    if ((event?.target as Element).className === 'tasks-container') {
-        console.log('container column');
-    }
+    const taskElement = event.target.closest('[data-task-hovered-index]');
+
+    if (!taskElement) return;
+
+    const { taskHoveredIndex } = taskElement.dataset;
+    console.log('%c task hovered id', 'color: orange', taskHoveredIndex);
+    
+    dropIndex = taskHoveredIndex;
 }
 </script>
 

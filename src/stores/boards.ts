@@ -71,7 +71,17 @@ export const useBoardsStore = defineStore('boards', () => {
         })
     };
 
-    const getColumns = () => { };
+    const getColumn = (columnId: string) => {
+        let column: ColumnType = { id: '', name: '', tasks: [] };
+
+        columnsAndTasks.value.forEach((col) => {
+            if (col.id === columnId) {
+                column = col;
+            }
+        });
+
+        return column;
+    };
 
     const setColumns = () => { };
 
@@ -99,7 +109,7 @@ export const useBoardsStore = defineStore('boards', () => {
         return wholeTask;
     };
 
-    const getColumnTasks = () => {
+    const getColumnsAndTasks = () => {
         columnsAndTasks.value = [];
         allBoards.value.boards.forEach((board) => {
             if (board.id === currentBoard.value.id) {
@@ -124,6 +134,35 @@ export const useBoardsStore = defineStore('boards', () => {
             }
         })
     }; // status
+
+    const setChangeTaskIndex = (
+        taskId: string,
+        column: ColumnType,
+        columnId: string,
+        taskIndex: number
+    ) => {
+        let taskToMove: TaskType;
+        let taskOriginalIndex: number;
+
+        column.tasks.forEach((task, index) => {
+            if (task.id === taskId) {
+                taskToMove = task;
+                taskOriginalIndex = index;
+            }
+        })
+
+        columnsAndTasks.value.forEach((col) => {
+            if (col.id === columnId) {
+                col.tasks.splice(
+                    taskIndex ?? col.tasks.length,
+                    0,
+                    taskToMove,
+                );
+                col.tasks.splice(taskOriginalIndex + 1, 1);
+            } 
+        })
+
+    };
 
     const getEditTask = (taskId: string, columnId: string): TaskType => {
         let wholeTask: TaskType = {
@@ -174,7 +213,7 @@ export const useBoardsStore = defineStore('boards', () => {
 
         if (boards.value.length) {
             setCurrentBoard(boards.value[0].id, boards.value[0].name);
-            getColumnTasks();
+            getColumnsAndTasks();
         }
     }
 
@@ -184,8 +223,10 @@ export const useBoardsStore = defineStore('boards', () => {
         columnsAndTasks,
         fetchBoards,
         getBoards,
-        getColumnTasks,
+        getColumn,
+        getColumnsAndTasks,
         setTaskColumn,
         getEditTask,
+        setChangeTaskIndex,
     };
 });
