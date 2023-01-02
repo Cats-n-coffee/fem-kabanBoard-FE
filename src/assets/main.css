@@ -90,9 +90,21 @@ body[data-theme="dark"] {
   padding: 8px 8px 8px 16px;
 }
 
+.form-input:hover, .form-input:focus {
+  outline: 1px solid var(--primary);
+}
+
 .form-input::placeholder {
   color: var(--form-input);
   font-size: 13px;
   font-weight: 500;
   font-family: var(--font-family);
+}
+
+.form-text-area {
+  line-height: 23px;
+  max-height: 112px;
+  overflow: scroll;
+  font-family: var(--font-family);
+  font-size: 13px;
 }

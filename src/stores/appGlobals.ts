@@ -21,7 +21,7 @@ export const useSwitchTheme = defineStore('theme', () => {
 });
 
 export const useHideSidebar = defineStore('sidebar', () => {
-    const hideSidebar = ref(false);
+    const hideSidebar = ref(true);
 
     const handleHideSidebar = () => {
         hideSidebar.value = true;

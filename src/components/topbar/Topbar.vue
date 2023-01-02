@@ -8,7 +8,7 @@
                 <LogoMobile class="logo-mobile" />
                 <h2>Board name</h2>
                 <button class="sidebar-toggle-mobile" @click="handleSidebarMobile">
-                    <ChevronDownIcon />
+                    <ChevronDownIcon class="chevron" :class="{ rotate: !hideSidebar }"/>
                 </button>
             </div>
             <div class="bar-actions">
@@ -122,7 +122,6 @@ const showDeleteBoardModal = () => {
     }
 }
 
-
 .sidebar-toggle-mobile {
     background: none;
     border: none;
@@ -134,6 +133,14 @@ const showDeleteBoardModal = () => {
 
     @media screen and (min-width: 700px) {
         display: none;
+    }
+
+    .chevron {
+        transition: all 500ms ease-in-out;
+
+        &.rotate {
+            transform: rotateX(180deg);
+        }
     }
 }
 

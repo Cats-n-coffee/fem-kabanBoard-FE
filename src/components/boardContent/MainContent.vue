@@ -23,8 +23,10 @@ const { hideSidebar } = storeToRefs(sidebarStore);
     padding: 24px 0 0 24px;
     overflow: scroll;
 
-    &.reduced {
-        width: calc(100vw - 250px);
+    @media screen and (min-width: 700px) {
+        &.reduced {
+            width: calc(100vw - 250px);
+        }
     }
 }
 </style>

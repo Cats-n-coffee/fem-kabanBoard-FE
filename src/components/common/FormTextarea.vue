@@ -3,9 +3,9 @@
         <label :for="forAttr" class="form-label">{{ label }}</label>
         <textarea
           :id="forAttr"
-          class="form-input"
+          class="form-input form-text-area"
           cols="30"
-          rows="10"
+          rows="4"
           :placeholder="placeholderText"
         ></textarea>
     </fieldset>
