@@ -14,6 +14,7 @@ desktop: 1000px
   --button-secondary-font: #635FC7;
   --white: #FFFFFF;
   --blur: rgba(0, 0, 0, 0.5);
+  --primary-fade-25: rgba(99, 95, 199, 0.25);
 }
 
 *,
@@ -45,6 +46,7 @@ body[data-theme="light"] {
   --form-label: #828FA3;
   --board-actions: #FFFFFF;
   --form-input: rgba(0, 1, 18, 0.25);
+  --font-primary-50: rgba(0, 1, 18, 0.5);
 }
 
 body[data-theme="dark"] {
@@ -58,6 +60,7 @@ body[data-theme="dark"] {
   --form-label: #FFFFFF;
   --board-actions: #20212C;
   --form-input: rgba(255, 255, 255, 0.25);
+  --font-primary-50: rgba(255, 255, 255, 0.5);
 }
 
 #app {

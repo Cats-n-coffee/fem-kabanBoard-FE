@@ -75,12 +75,16 @@ const selectOption = (option: string) => {
     border: 1px solid var(--form-input);
     border-radius: 4px;
 
-    &.active .custom-options {
-        display: block;
+    &:hover {
+        outline: 1px solid var(--primary);
     }
 
-    option {
-        background-color: var(--light);
+    &.active {
+        outline: 1px solid var(--primary);
+    }
+
+    &.active .custom-options {
+        display: block;
     }
 }
 
