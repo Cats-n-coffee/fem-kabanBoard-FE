@@ -1,7 +1,11 @@
 <template>
     <fieldset class="form-fieldset">
         <span class="form-label">{{ label }}</span>
-        <div class="form-select" :class="{ active: isSelectExpanded }">
+        <div
+          class="form-select"
+          :class="{ active: isSelectExpanded }"
+          v-click-out="toggleOptions"
+        >
             <div
               class="displayed-option"
               @click="toggleOptions"
