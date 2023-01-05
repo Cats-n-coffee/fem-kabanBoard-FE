@@ -4,7 +4,7 @@
         <div
           class="form-select"
           :class="{ active: isSelectExpanded }"
-          v-on-click-outside="toggleOptions"
+          v-on-click-outside="closeDropdown"
         >
             <div
               class="displayed-option"
@@ -57,6 +57,10 @@ const toggleOptions = () => {
     console.log('toggled');
     isSelectExpanded.value = !isSelectExpanded.value;
 };
+
+const closeDropdown = () => {
+    isSelectExpanded.value = false;
+}
 // https://stackoverflow.com/questions/71253452/vue-3-global-directive-click-outside
 // https://stackoverflow.com/questions/60144575/how-do-you-handle-click-outside-of-element-properly-in-vuejs
 // https://medium.com/@Taha_Shashtari/an-easy-way-to-detect-clicks-outside-an-element-in-vue-1b51d43ff634

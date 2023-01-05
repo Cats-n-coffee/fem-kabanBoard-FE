@@ -1,5 +1,5 @@
 <template>
-    <div class="view-task-modal">
+    <div class="view-task-modal" v-on-click-outside="toggleModal">
         <div class="task-title-actions">
             <h2>{{ title }}</h2>
             <EllipsisButton
@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
+import { vOnClickOutside } from '@vueuse/components';
 import CheckboxRibbon from '../common/CheckboxRibbon.vue';
 import EllipsisButton from '../common/EllipsisButton.vue';
 import FormSelect from '../common/FormSelect.vue';
@@ -33,7 +34,7 @@ const { currentTask } = storeToRefs(currentTaskStore);
 const { title, description, subtasks, status } = currentTask.value;
 
 const appModalStore = useAppModal();
-const { setModalName } = appModalStore;
+const { setModalName, toggleModal } = appModalStore;
 
 const showEditTaskModal = () => {
     console.log('edit task modal');
@@ -80,9 +81,5 @@ const numberOfCompletedTasks = computed(() => {
     line-height: 23px;
     color: var(--font-secondary);
     padding-top: 24px;
-}
-
-.task-subtasks {
-    
 }
 </style>

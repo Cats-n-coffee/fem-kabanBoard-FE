@@ -1,6 +1,5 @@
 <template>
     <div class="modal">
-        <button @click="toggleModal">close</button>
         <AddTaskModal v-if="modalName === 'addTask'" />
         <AddBoardModal v-if="modalName === 'addBoard'" />
         <EditBoardModal v-if="modalName === 'editBoard'"/>
@@ -24,7 +23,6 @@ import { useAppModal } from '@/stores/appGlobals';
 
 const appModalStore = useAppModal();
 const { modalName } = storeToRefs(appModalStore);
-const { toggleModal } = appModalStore;
 </script>
 
 <style scoped lang="less">

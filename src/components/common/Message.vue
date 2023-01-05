@@ -1,5 +1,5 @@
 <template>
-    <div class="message-modal">
+    <div class="message-modal" v-on-click-outside="toggleModal">
         <h2>
             <slot name="title"></slot>
         </h2>
@@ -9,6 +9,14 @@
         <slot name="actions"></slot>
     </div>
 </template>
+
+<script setup lang="ts">
+import { vOnClickOutside } from '@vueuse/components';
+import { useAppModal } from '@/stores/appGlobals';
+
+const appModalStore = useAppModal();
+const { toggleModal } = appModalStore;
+</script>
 
 <style scoped lang="less">
 .message-modal {
