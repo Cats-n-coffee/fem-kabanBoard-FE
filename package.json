@@ -14,6 +14,8 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@vueuse/components": "^9.10.0",
+    "@vueuse/core": "^9.10.0",
     "pinia": "^2.0.23",
     "vite-svg-loader": "^3.6.0",
     "vue": "^3.2.41",

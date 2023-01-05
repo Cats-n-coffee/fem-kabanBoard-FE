@@ -4,7 +4,7 @@
         <div
           class="form-select"
           :class="{ active: isSelectExpanded }"
-          v-click-out="toggleOptions"
+          v-on-click-outside="toggleOptions"
         >
             <div
               class="displayed-option"
@@ -33,6 +33,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ChevronDownIcon from '@/assets/images/icon-chevron-down.svg?component';
+import { vOnClickOutside } from '@vueuse/components';
 
 export interface Props {
     label: string,
@@ -53,6 +54,7 @@ const demoArr = [
 const optionSelected = ref(demoArr[0] || '');
 
 const toggleOptions = () => {
+    console.log('toggled');
     isSelectExpanded.value = !isSelectExpanded.value;
 };
 // https://stackoverflow.com/questions/71253452/vue-3-global-directive-click-outside
