@@ -16,14 +16,7 @@
 <script setup lang="ts">
 import { useCurrentTask } from '@/stores/current';
 import { useAppModal } from '@/stores/appGlobals';
-
-export interface TaskType {
-    title: string,
-    description: string,
-    id: string,
-    status: string,
-    subtasks: [],
-}
+import type { TaskType } from '@/@types/boardTypes';
 
 export interface Props {
     tasks?: TaskType[],

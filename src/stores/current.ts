@@ -1,24 +1,10 @@
 import { ref, type Ref } from 'vue';
 import { defineStore } from 'pinia';
 import { useBoardsStore } from '@/stores/boards';
-
-interface SubTaskType {
-    title: string,
-    isCompleted: boolean,
-}
-
-interface TaskType {
-    description: string,
-    id: string,
-    title: string,
-    subtasks: SubTaskType[],
-    status: string,
-}
-
-interface BoardsOnlyType {
-    id: string,
-    name: string,
-}
+import type {
+    TaskType,
+    BoardsOnlyType,
+} from '@/@types/boardTypes';
 
 export const useCurrentBoard = defineStore('currentBoard', () => {
     const currentBoard: Ref<BoardsOnlyType> = ref({ id: '', name: '' });

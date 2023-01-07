@@ -22,20 +22,7 @@ import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useBoardsStore } from '@/stores/boards';
 import Task from './Task.vue';
-
-export interface TaskType {
-    description: string,
-    id: string,
-    title: string,
-    subtasks: [],
-    status: string,
-}
-
-export interface ColumnType {
-    id: string,
-    name: string,
-    tasks: TaskType[],
-}
+import type { ColumnType } from '@/@types/boardTypes';
 
 const boardsStore = useBoardsStore();
 const { columnsAndTasks } = storeToRefs(boardsStore);

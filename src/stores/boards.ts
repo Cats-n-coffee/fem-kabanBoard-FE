@@ -1,40 +1,14 @@
 import { ref, type Ref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 import { useCurrentBoard } from './current';
-
-interface SubTaskType {
-    title: string,
-    isCompleted: boolean,
-}
-
-interface TaskType {
-    description: string,
-    id: string,
-    title: string,
-    subtasks: [],
-    status: string,
-}
-
-interface ColumnType {
-    id: string,
-    name: string,
-    tasks: TaskType[],
-}
-
-interface BoardsType {
-    id: string,
-    name: string,
-    columns: ColumnType[],
-}
-
-interface BoardsOnlyType {
-    id: string,
-    name: string,
-}
-
-interface AllBoardType {
-    boards: BoardsType[],
-};
+import type {
+    SubTaskType,
+    TaskType,
+    ColumnType,
+    BoardsType,
+    BoardsOnlyType,
+    AllBoardType,
+} from '@/@types/boardTypes';
 
 export const useBoardsStore = defineStore('boards', () => {
     const allBoards: Ref<AllBoardType> = ref({ boards: [] });
@@ -62,9 +36,9 @@ export const useBoardsStore = defineStore('boards', () => {
         );
     };
 
-    // adds/delete a board
     const addBoard = (board: BoardsType) => {
         allBoards.value.boards.push(board);
+        boards.value.push(board);
     };
 
     const getColumn = (columnId: string) => {

@@ -31,33 +31,27 @@
 import { ref, computed, type Ref } from 'vue';
 import Button from '@/components/common/Button.vue';
 import CloseIcon from '@/assets/images/icon-cross.svg?component';
-
-export interface SubtaskType {
-    title: string,
-    isCompleted: boolean,
-}
+import type { SubTaskType } from '@/@types/boardTypes';
 
 export interface Props {
     label: string,
     forAttr: string,
-    clickHandler: ((payload: MouseEvent) => void) | undefined,
     buttonIcon: string,
     buttonLabel: string,
-    subtasks?: SubtaskType[],
+    subtasks?: SubTaskType[],
     placeholderSubtask?: boolean,
 }
 
 const props = withDefaults(defineProps<Props>(), {
     label: '',
     forAttr: 'form-label',
-    clickHandler: () => {},
     buttonIcon: '',
     buttonLabel: '',
     subtasks: () => [],
     placeholderSubtask: false,
 });
 
-const allSubtasks: Ref<SubtaskType[]> = ref([...props.subtasks]);
+const allSubtasks: Ref<SubTaskType[]> = ref([...props.subtasks]);
 
 const addNewInput = () => {
     allSubtasks.value.push({ title: '', isCompleted: false});
@@ -66,7 +60,8 @@ const addNewInput = () => {
 const deleteItem = () => {
     console.log('delete item');
 };
-
+// https://jsfiddle.net/crswll/24txy506/9/
+// https://stackoverflow.com/questions/34825065/vuejs-v-model-array-in-multiple-input
 const subtasksToDisplay = computed(() => {
     // const subtasksToDisplay: SubtaskType[] = [];
     // an array with a fake object or an object?

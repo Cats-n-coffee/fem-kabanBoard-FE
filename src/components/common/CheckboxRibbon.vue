@@ -17,13 +17,10 @@
 </template>
 
 <script setup lang="ts">
-export interface SubtaskType {
-    title: string,
-    isCompleted: boolean,
-}
+import type { SubTaskType } from '@/@types/boardTypes';
 
 export interface Props {
-    subtasks: SubtaskType[],
+    subtasks: SubTaskType[],
 }
 
 withDefaults(defineProps<Props>(), {
