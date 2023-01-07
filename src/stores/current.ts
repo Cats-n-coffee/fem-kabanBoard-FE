@@ -1,5 +1,5 @@
 import { ref, type Ref } from 'vue';
-import { defineStore, storeToRefs } from 'pinia';
+import { defineStore } from 'pinia';
 import { useBoardsStore } from '@/stores/boards';
 
 interface SubTaskType {

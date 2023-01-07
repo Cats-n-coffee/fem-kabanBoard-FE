@@ -14,7 +14,7 @@
 defineProps<{
     clickHandler: ((payload: MouseEvent) => void) | undefined,
     classColor?: string,
-    disabled: boolean,
+    disabled?: boolean,
 }>()
 </script>
 

@@ -41,6 +41,7 @@ export const useBoardsStore = defineStore('boards', () => {
     const boards: Ref<BoardsOnlyType[]> = ref([]);
     const columnsAndTasks: Ref<ColumnType[]> = ref([]);
 
+    // Other stores
     const currentBoardStore = useCurrentBoard();
     const { currentBoard } = storeToRefs(currentBoardStore);
     const { setCurrentBoard } = currentBoardStore;
@@ -61,14 +62,9 @@ export const useBoardsStore = defineStore('boards', () => {
         );
     };
 
-    const setBoards = () => {
-        const currentBoardId = currentBoard.value.id;
-
-        allBoards.value.boards.forEach((board) => {
-            if (currentBoardId === board.id) {
-                board.columns = columnsAndTasks.value;
-            }
-        })
+    // adds/delete a board
+    const addBoard = (board: BoardsType) => {
+        allBoards.value.boards.push(board);
     };
 
     const getColumn = (columnId: string) => {
@@ -220,6 +216,7 @@ export const useBoardsStore = defineStore('boards', () => {
     return {
         allBoards,
         boards,
+        addBoard,
         columnsAndTasks,
         fetchBoards,
         getBoards,

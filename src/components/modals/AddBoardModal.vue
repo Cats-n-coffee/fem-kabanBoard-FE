@@ -41,8 +41,8 @@ import Form from '@/components/common/Form.vue';
 import FormInputField from '@/components/common/FormInputField.vue';
 import FormInputInteractive from '@/components/common/FormInputInteractive.vue';
 import Button from '@/components/common/Button.vue';
-import { useCurrentForm } from '@/stores/form';
-import { useCurrentFormErrors } from '@/stores/form';
+import { useCurrentForm, useCurrentFormErrors } from '@/stores/form';
+import { useBoardsStore } from '@/stores/boards';
 
 const currentFormStore = useCurrentForm();
 const { setCurrentFormValues } = currentFormStore;
@@ -56,6 +56,7 @@ const newBoardColumns = ref([]);
 
 onMounted(() => {
     setCurrentFormValues({
+        id: '',
         name: '',
         columns: [],
     });
@@ -72,7 +73,6 @@ const isSubmitDisabled = computed(() => {
 
 const updateBoardName = (value: string) => {
     newBoardName.value = value;
-    console.log('in parent', value);
 }
 
 const updateNameError = (value: string) => {
@@ -85,9 +85,16 @@ const addColumn = () => {
     console.log('add column');
 }
 
+const useBoards = useBoardsStore();
+const { addBoard } = useBoards;
+
 const createBoard = () => {
-    // check for error obj to only have falsy values
-    console.log('create new board');
+    const newId = Math.floor(Math.random() * 1000).toString();
+    addBoard({
+        id: newId,
+        name: newBoardName.value,
+        columns: newBoardColumns.value,
+    })
 }
 </script>
 
