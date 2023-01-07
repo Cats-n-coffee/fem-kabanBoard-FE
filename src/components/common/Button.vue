@@ -1,5 +1,10 @@
 <template>
-    <button @click="clickHandler" class="primary-button" :class="[ `${classColor}` ]">
+    <button
+      @click="clickHandler"
+      class="primary-button"
+      :class="[ `${classColor}` ]"
+      :disabled="disabled"
+    >
         <slot name="icon"></slot>
         <slot name="label"></slot>
     </button>
@@ -9,6 +14,7 @@
 defineProps<{
     clickHandler: ((payload: MouseEvent) => void) | undefined,
     classColor?: string,
+    disabled: boolean,
 }>()
 </script>
 
@@ -30,6 +36,11 @@ defineProps<{
     &:hover {
         background-color: var(--primary-hover);
         cursor: pointer;
+    }
+
+    &:disabled, &:disabled:hover {
+        background-color: var(--form-input);
+        cursor: default;
     }
 }
 

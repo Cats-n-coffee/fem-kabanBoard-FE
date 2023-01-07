@@ -111,3 +111,13 @@ body[data-theme="dark"] {
   font-family: var(--font-family);
   font-size: 13px;
 }
+
+.error-text {
+  color: var(--red);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.error-box {
+  border: 1px solid var(--red);
+}

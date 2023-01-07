@@ -78,6 +78,7 @@ const handleDragEnter = (event: {
 .column {
     min-width: 280px;
     width: 280px;
+    padding-bottom: 24px;
 
     h3 {
         padding-bottom: 24px;
