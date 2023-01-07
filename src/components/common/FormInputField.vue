@@ -9,6 +9,7 @@
           :placeholder="placeholderText"
           minlength="2"
           maxlength="150"
+          :value="inputValue"
           @input="handleInput(($event.target as HTMLInputElement).value.trim())"
           @blur="validateField(($event.target as HTMLInputElement).value.trim())"
         >
