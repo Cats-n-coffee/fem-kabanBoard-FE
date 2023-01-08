@@ -22,12 +22,3 @@ export interface BoardsType {
     name: string,
     columns: ColumnType[],
 }
-
-export interface BoardsOnlyType {
-    id: string,
-    name: string,
-}
-
-export interface AllBoardType {
-    boards: BoardsType[],
-};

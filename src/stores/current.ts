@@ -3,19 +3,23 @@ import { defineStore } from 'pinia';
 import { useBoardsStore } from '@/stores/boards';
 import type {
     TaskType,
-    BoardsOnlyType,
+    BoardsType,
+    ColumnType,
 } from '@/@types/boardTypes';
 
 export const useCurrentBoard = defineStore('currentBoard', () => {
-    const currentBoard: Ref<BoardsOnlyType> = ref({ id: '', name: '' });
+    const currentBoard: Ref<BoardsType> = ref({ id: '', name: '', columns: [] });
 
     const getCurrentBoard = () => {
         return currentBoard.value;
     };
 
-    const setCurrentBoard = (id: string, name: string) => {
-        currentBoard.value.id = id;
-        currentBoard.value.name = name;
+    const setCurrentBoard = (id: string, name: string, columns: ColumnType[]) => {
+        currentBoard.value = {
+            id,
+            name,
+            columns,
+        }
     };
 
     return {

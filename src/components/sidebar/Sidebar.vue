@@ -6,9 +6,9 @@
             <div class="all-boards-actions">
                 <ul>
                     <li
-                      v-for="{ id, name } in boards"
+                      v-for="{ id, name, columns } in boards"
                       :key="id"
-                      @click="setCurrentBoardState(id, name)"
+                      @click="setCurrentBoardState(id, name, columns)"
                       :class="{ active: currentBoard.id === id }"
                     >
                         <BoardIcon />
@@ -35,6 +35,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
+import type { ColumnType } from '@/@types/boardTypes';
 import ThemeSwitcher from './ThemeSwitcher.vue';
 import Logo from '@/components/common/Logo.vue';
 import BoardIcon from '@/components/icons/BoardIcon.vue';
@@ -62,8 +63,8 @@ defineProps<{
     hideSidebar: boolean,
 }>()
 
-const setCurrentBoardState = (id: string, name: string) => {
-    setCurrentBoard(id, name);
+const setCurrentBoardState = (id: string, name: string, columns: ColumnType[]) => {
+    setCurrentBoard(id, name, columns);
     getColumnsAndTasks();
 }
 

@@ -6,13 +6,10 @@ import type {
     TaskType,
     ColumnType,
     BoardsType,
-    BoardsOnlyType,
-    AllBoardType,
 } from '@/@types/boardTypes';
 
 export const useBoardsStore = defineStore('boards', () => {
-    const allBoards: Ref<AllBoardType> = ref({ boards: [] });
-    const boards: Ref<BoardsOnlyType[]> = ref([]);
+    const boards: Ref<BoardsType[]> = ref([]);
     const columnsAndTasks: Ref<ColumnType[]> = ref([]);
 
     // Other stores
@@ -20,27 +17,41 @@ export const useBoardsStore = defineStore('boards', () => {
     const { currentBoard } = storeToRefs(currentBoardStore);
     const { setCurrentBoard } = currentBoardStore;
 
+    // Initial data
     const fetchBoards = async () => {
         const response = await fetch('./data.json');
         const jsonBoards = await response.json();
-        allBoards.value = jsonBoards;
+        boards.value = jsonBoards.boards;
 
         // add localStorage
         prepareStateAfterFetch();
         return jsonBoards;
     };
 
+    // Boards only
     const getBoards = () => {
-        allBoards.value.boards.forEach(
-            (board) => boards.value.push({ id: board.id, name: board.name })
-        );
+        return boards.value;
     };
 
     const addBoard = (board: BoardsType) => {
-        allBoards.value.boards.push(board);
         boards.value.push(board);
     };
 
+    const editBoard = (payload: BoardsType) => {
+        console.log('edit', payload);
+        let boardToEdit = boards.value.find(
+            (board) => board.id === payload.id
+        );
+        const currentColumns = boardToEdit?.columns;
+        // find the current columns and compare? overwrite what's changes
+        boardToEdit = { ...boardToEdit, ...payload }
+ 
+        console.log('board', boardToEdit);
+    };
+
+    const deleteBoard = () => { };
+
+    // Columns only
     const getColumn = (columnId: string) => {
         let column: ColumnType = { id: '', name: '', tasks: [] };
 
@@ -55,6 +66,19 @@ export const useBoardsStore = defineStore('boards', () => {
 
     const setColumns = () => { };
 
+    const deleteColumn = () => { };
+
+    // Columns and Tasks
+    const getColumnsAndTasks = () => {
+        columnsAndTasks.value = [];
+        boards.value.forEach((board) => {
+            if (board.id === currentBoard.value.id) {
+                columnsAndTasks.value.push(...board.columns);
+            }
+        })
+    };
+
+    // Tasks only
     // Returns the task obj and removes from original column
     const getTaskAndRemove = (taskId: string, columnId: string): TaskType => {
         let wholeTask: TaskType = {
@@ -77,15 +101,6 @@ export const useBoardsStore = defineStore('boards', () => {
         });
 
         return wholeTask;
-    };
-
-    const getColumnsAndTasks = () => {
-        columnsAndTasks.value = [];
-        allBoards.value.boards.forEach((board) => {
-            if (board.id === currentBoard.value.id) {
-                columnsAndTasks.value.push(...board.columns);
-            }
-        })
     };
 
     // updates task's column id (drag/drop or dropdown)
@@ -160,10 +175,6 @@ export const useBoardsStore = defineStore('boards', () => {
 
     }
 
-    const deleteBoard = () => { };
-
-    const deleteColumn = () => { };
-
     const deleteTask = (taskId: string, columnId: string) => {
         columnsAndTasks.value.forEach((column) => {
             if (columnId === column.id) {
@@ -182,15 +193,19 @@ export const useBoardsStore = defineStore('boards', () => {
         getBoards();
 
         if (boards.value.length) {
-            setCurrentBoard(boards.value[0].id, boards.value[0].name);
+            setCurrentBoard(
+                boards.value[0].id,
+                boards.value[0].name,
+                boards.value[0].columns,
+            );
             getColumnsAndTasks();
         }
     }
 
     return {
-        allBoards,
         boards,
         addBoard,
+        editBoard,
         columnsAndTasks,
         fetchBoards,
         getBoards,

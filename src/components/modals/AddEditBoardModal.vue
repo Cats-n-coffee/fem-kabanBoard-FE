@@ -17,7 +17,10 @@
               for-attr="board-input-interactive"
               button-icon="+"
               button-label="Add New Column"
-              :placeholder-subtask="modalPlaceholderColumns"
+              :data="boardColumns"
+              field-to-display="name"
+              :fields-to-use="interactiveFields"
+              :placeholder-data="modalPlaceholderColumns"
               @input-interactive-value="updateBoardColumns"
               @input-interactive-error="updateColumnsError"
             />
@@ -44,14 +47,10 @@ import Form from '@/components/common/Form.vue';
 import FormInputField from '@/components/common/FormInputField.vue';
 import FormInputInteractive from '@/components/common/FormInputInteractive.vue';
 import Button from '@/components/common/Button.vue';
+import { useAppModal } from '@/stores/appGlobals';
 import { useCurrentFormErrors } from '@/stores/form';
 import { useBoardsStore } from '@/stores/boards';
 import { useCurrentBoard } from '@/stores/current';
-
-const currentBoardStore = useCurrentBoard();
-const { getCurrentBoard } = currentBoardStore;
-
-const { name } = getCurrentBoard();
 
 const props = defineProps<{
     modalName: string, 
@@ -94,9 +93,22 @@ const modalPlaceholderColumns = computed(() => {
      : false;
 });
 
+const interactiveFields: ColumnType = {
+    id: '',
+    name: '',
+    tasks: [],
+};
+
 // Input handling
+const currentBoardStore = useCurrentBoard();
+const { getCurrentBoard } = currentBoardStore;
+
+const { id, name, columns } = getCurrentBoard();
+
 const boardName = ref(props.modalName === 'editBoard' ? name : '');
-const boardColumns: Ref<ColumnType[]> = ref([]);
+const boardColumns: Ref<ColumnType[]> = ref(
+    props.modalName === 'editBoard' ? columns : []
+);
 
 const updateBoardColumns = (value: string) => {
     const newId = Math.floor(Math.random() * 1000).toString();
@@ -139,19 +151,24 @@ const isSubmitDisabled = computed(() => {
 
 // Submit + state updates
 const useBoards = useBoardsStore();
-const { addBoard } = useBoards;
+const { addBoard, editBoard } = useBoards;
+
+const appModalStore = useAppModal();
+const { toggleModal } = appModalStore;
 
 const submitBoard = () => {
+    const newData = {
+        name: boardName.value,
+        columns: boardColumns.value,
+    }
+
     if (props.modalName === 'addBoard') {
         const newId = Math.floor(Math.random() * 1000).toString();
-        addBoard({
-            id: newId,
-            name: boardName.value,
-            columns: boardColumns.value,
-        })
-    } else { // editBoard
-        // handle the fields updates
+        addBoard({ id: newId, ...newData })
+    } else {
+        editBoard({ id, ...newData });
     } 
+    toggleModal();
 }
 </script>
 

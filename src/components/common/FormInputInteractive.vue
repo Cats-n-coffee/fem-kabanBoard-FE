@@ -2,7 +2,7 @@
     <fieldset class="form-fieldset">
         <label :for="forAttr" class="form-label">{{ label }}</label>
         <div
-          v-for="(subtask, index) in subtasksToDisplay"
+          v-for="(data, index) in dataToDisplay"
           :key="index"
           class="input-wrapper"
         >
@@ -10,7 +10,7 @@
               type="text"
               :id="forAttr"
               class="form-input"
-              :value="subtask.title"
+              :value="data[fieldToDisplay]"
             >
             <button class="remove-item-btn" @click="deleteItem">
                 <CloseIcon />
@@ -28,18 +28,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, type Ref } from 'vue';
+import { ref, computed } from 'vue';
 import Button from '@/components/common/Button.vue';
 import CloseIcon from '@/assets/images/icon-cross.svg?component';
-import type { SubTaskType } from '@/@types/boardTypes';
+import type { SubTaskType, ColumnType } from '@/@types/boardTypes';
 
 export interface Props {
     label: string,
     forAttr: string,
     buttonIcon: string,
     buttonLabel: string,
-    subtasks?: SubTaskType[],
-    placeholderSubtask?: boolean,
+    data?: ColumnType[] | SubTaskType[],
+    fieldToDisplay?: string,
+    fieldsToUse?: ColumnType | SubTaskType,
+    placeholderData?: boolean,
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -47,14 +49,16 @@ const props = withDefaults(defineProps<Props>(), {
     forAttr: 'form-label',
     buttonIcon: '',
     buttonLabel: '',
-    subtasks: () => [],
-    placeholderSubtask: false,
+    data: () => [],
+    fieldToDisplay: '',
+    fieldsToUse: () => {},
+    placeholderData: false,
 });
 
-const allSubtasks: Ref<SubTaskType[]> = ref([...props.subtasks]);
+const allData = ref<SubTaskType[] | ColumnType[]>(props.data || []);
 
 const addNewInput = () => {
-    allSubtasks.value.push({ title: '', isCompleted: false});
+    // allData.value.push({ title: '', isCompleted: false});
 };
 
 const deleteItem = () => {
@@ -62,14 +66,17 @@ const deleteItem = () => {
 };
 // https://jsfiddle.net/crswll/24txy506/9/
 // https://stackoverflow.com/questions/34825065/vuejs-v-model-array-in-multiple-input
-const subtasksToDisplay = computed(() => {
-    // const subtasksToDisplay: SubtaskType[] = [];
+const dataToDisplay = computed(() => {
     // an array with a fake object or an object?
-    if (props.placeholderSubtask) {
-        allSubtasks.value.push({ title: '', isCompleted: false });
+    if (
+        props.placeholderData
+        && !props.data?.length
+        && props.fieldsToUse
+    ) {
+        allData.value.push(props.fieldsToUse);
     }
 
-    return allSubtasks.value;
+    return allData.value;
 });
 </script>
 
