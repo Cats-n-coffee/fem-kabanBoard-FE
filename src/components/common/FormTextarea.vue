@@ -18,7 +18,7 @@ export interface Props {
     label: string,
     forAttr: string,
     placeholderText: string,
-    inputValue: string,
+    inputValue?: string,
 }
 
 withDefaults(defineProps<Props>(), {

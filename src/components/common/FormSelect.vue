@@ -18,7 +18,7 @@
             </div>
             <div class="custom-options">
                 <div
-                  v-for="(item, index) in demoArr"
+                  v-for="(item, index) in reorderColumnNames"
                   :key="index"
                   class="custom-option"
                   @click="selectOption(item)"
@@ -31,27 +31,45 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import ChevronDownIcon from '@/assets/images/icon-chevron-down.svg?component';
 import { vOnClickOutside } from '@vueuse/components';
 
 export interface Props {
     label: string,
     forAttr: string,
+    selectedValue?: string,
+    values: string[],
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
     label: '',
     forAttr: 'form-label',
+    selectedValue: '',
+    values: () => [],
 });
 
 const isSelectExpanded = ref(false);
-const demoArr = [
-    'Todo',
-    'Doing',
-    'Done',
-];
-const optionSelected = ref(demoArr[0] || '');
+
+const reorderColumnNames = computed(() => {
+    if (props.values[0] === props.selectedValue) {
+        return props.values;
+    }
+
+    const columnsCopy = [...props.values];
+    const selectedStatusIndex = columnsCopy.indexOf(props.selectedValue);
+
+    if (selectedStatusIndex === -1) {
+        return columnsCopy;
+    }
+
+    const removedStatus = columnsCopy.splice(selectedStatusIndex, 1);
+    columnsCopy.unshift(removedStatus[0]);
+
+    return columnsCopy;
+});
+
+const optionSelected = ref(reorderColumnNames.value[0] || '');
 
 const toggleOptions = () => {
     console.log('toggled');

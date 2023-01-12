@@ -26,7 +26,12 @@
               button-label="Add New Subtask"
               :placeholder-subtask="modalPlaceholderColumns"
             />
-            <FormSelect label="Status" for-attr="task-select" />
+            <FormSelect
+              label="Status"
+              for-attr="task-select"
+              :selected-value="taskStatus"
+              :values="allColumnsNames"
+            />
         </template>
         <template #submitButton>
             <Button
@@ -55,6 +60,8 @@ import FormSelect from '@/components/common/FormSelect.vue';
 import Button from '@/components/common/Button.vue';
 import { useCurrentTask } from '@/stores/current';
 import { useCurrentFormErrors } from '@/stores/form';
+import { useAppModal } from '@/stores/appGlobals';
+import { useBoardsStore } from '@/stores/boards';
 
 const props = defineProps<{
     modalName: string, 
@@ -88,6 +95,9 @@ const modalSubmitButton = computed(() => {
 });
 
 // Handle input
+const useBoards = useBoardsStore();
+const { getColumnNames } = useBoards;
+
 const currentTaskStore = useCurrentTask();
 const { getCurrentTask } = currentTaskStore;
 
@@ -95,6 +105,8 @@ const { title, description, subtasks, status } = getCurrentTask();
 
 const taskTitle = ref(props.modalName === 'editTask' ? title : '');
 const taskDescription = ref(props.modalName === 'editTask' ? description : '');
+const allColumnsNames = getColumnNames();
+const taskStatus = ref(props.modalName === 'editTask' ? status : allColumnsNames[0]);
 
 const updateTaskTitle = (value: string) => {
     taskTitle.value = value;
@@ -102,7 +114,7 @@ const updateTaskTitle = (value: string) => {
 
 const updateTaskDescription = (value: string) => {
     taskDescription.value = value;
-}
+};
 
 // Handle errors
 const currentErrorsStore = useCurrentFormErrors();
@@ -125,6 +137,10 @@ const isSubmitDisabled = computed(() => {
     const allErrors = Object.values(currentErrors.value);
     return allErrors.every((error) => error) || !taskTitle.value;
 });
+
+// Submit + state updates
+const appModalStore = useAppModal();
+const { toggleModal } = appModalStore;
 
 const createTask = () => {
     console.log('create task');

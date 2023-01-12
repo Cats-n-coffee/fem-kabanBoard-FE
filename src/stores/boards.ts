@@ -64,6 +64,10 @@ export const useBoardsStore = defineStore('boards', () => {
         return column;
     };
 
+    const getColumnNames = () => { // for the status dropdown
+        return currentBoard.value.columns.map((col) => col.name);     
+    };
+
     const setColumns = () => { };
 
     const deleteColumn = () => { };
@@ -210,6 +214,7 @@ export const useBoardsStore = defineStore('boards', () => {
         fetchBoards,
         getBoards,
         getColumn,
+        getColumnNames,
         getColumnsAndTasks,
         setTaskColumn,
         getEditTask,
