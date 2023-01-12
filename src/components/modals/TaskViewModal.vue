@@ -30,14 +30,13 @@ import { useCurrentTask } from '@/stores/current';
 import { useAppModal } from '@/stores/appGlobals';
 
 const currentTaskStore = useCurrentTask();
-const { currentTask } = storeToRefs(currentTaskStore);
-const { title, description, subtasks, status } = currentTask.value;
+const { getCurrentTask } = currentTaskStore;
+const { title, description, subtasks, status } = getCurrentTask();
 
 const appModalStore = useAppModal();
 const { setModalName, toggleModal } = appModalStore;
 
 const showEditTaskModal = () => {
-    console.log('edit task modal');
     setModalName('editTask');
 };
 

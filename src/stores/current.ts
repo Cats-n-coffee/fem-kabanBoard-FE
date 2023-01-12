@@ -41,6 +41,10 @@ export const useCurrentTask = defineStore('currentTask', () => {
         status: '',
     });
 
+    const getCurrentTask = () => {
+        return currentTask.value;
+    };
+
     const setCurrentTask = (taskId: string, columnId: string) => {
         const fullTask = getEditTask(taskId, columnId);
         currentTask.value = fullTask;
@@ -48,6 +52,7 @@ export const useCurrentTask = defineStore('currentTask', () => {
 
     return {
         currentTask,
+        getCurrentTask,
         setCurrentTask,
     }
 });

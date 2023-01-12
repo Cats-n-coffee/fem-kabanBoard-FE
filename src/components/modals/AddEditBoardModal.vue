@@ -110,6 +110,10 @@ const boardColumns: Ref<ColumnType[]> = ref(
     props.modalName === 'editBoard' ? columns : []
 );
 
+const updateBoardName = (value: string) => {
+    boardName.value = value;
+}
+
 const updateBoardColumns = (value: string) => {
     const newId = Math.floor(Math.random() * 1000).toString();
     const newColumn = {
@@ -118,10 +122,6 @@ const updateBoardColumns = (value: string) => {
         tasks: [],
     }
     boardColumns.value.push(newColumn);
-}
-
-const updateBoardName = (value: string) => {
-    boardName.value = value;
 }
 
 // Error handling

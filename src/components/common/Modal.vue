@@ -1,12 +1,14 @@
 <template>
     <div class="modal">
-        <AddTaskModal v-if="modalName === 'addTask'" />
         <DeleteBoardModal v-if="modalName === 'deleteBoard'" />
         <TaskViewModal v-if="modalName === 'viewTask'" />
-        <EditTaskModal v-if="modalName === 'editTask'" />
         <DeleteTaskModal v-if="modalName === 'deleteTask'" />
         <AddEditBoardModal
           v-if="modalName === 'addBoard' || modalName === 'editBoard'"
+          :modal-name="modalName"
+        />
+        <AddEditTaskModal
+          v-if="modalName === 'addTask' || modalName === 'editTask'"
           :modal-name="modalName"
         />
     </div>
@@ -14,13 +16,12 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import AddTaskModal from '@/components/modals/AddTaskModal.vue';
 import DeleteBoardModal from '@/components/modals/DeleteBoardModal.vue';
 import TaskViewModal from '@/components/modals/TaskViewModal.vue';
-import EditTaskModal from '@/components/modals/EditTaskModal.vue';
 import DeleteTaskModal from '@/components/modals/DeleteTaskModal.vue';
 import { useAppModal } from '@/stores/appGlobals';
 import AddEditBoardModal from '@/components/modals/AddEditBoardModal.vue';
+import AddEditTaskModal from '@/components/modals/AddEditTaskModal.vue';
 
 const appModalStore = useAppModal();
 const { modalName } = storeToRefs(appModalStore);
