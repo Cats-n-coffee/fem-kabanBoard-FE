@@ -7,6 +7,7 @@ desktop: 1000px
   --font-family: 'Plus Jakarta Sans', sans-serif;
   --font-secondary: #828FA3;
   --shadow: 0px 4px 6px rgba(54, 78, 126, 0.1);
+  --wide-shadow: 0px 10px 20px rgba(54, 78, 126, 0.25);
   --primary: #635FC7;
   --primary-hover: #A8A4FF;
   --red: #EA5555;

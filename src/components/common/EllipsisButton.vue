@@ -62,6 +62,7 @@ const showMoreActions = () => {
     padding: 16px;
     gap: 16px;
     border-radius: 8px;
+    box-shadow: var(--wide-shadow);
 
     &.show {
         display: flex;
