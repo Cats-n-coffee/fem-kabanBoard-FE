@@ -83,6 +83,14 @@ export const useBoardsStore = defineStore('boards', () => {
     };
 
     // Tasks only
+    const addTask = (newTask: TaskType) => {
+        currentBoard.value.columns.forEach((col) => {
+            if (col.name === newTask.status) {
+                col.tasks.push(newTask);
+            }
+        })
+    };
+
     // Returns the task obj and removes from original column
     const getTaskAndRemove = (taskId: string, columnId: string): TaskType => {
         let wholeTask: TaskType = {
@@ -175,8 +183,18 @@ export const useBoardsStore = defineStore('boards', () => {
         return wholeTask;
     };
 
-    const setEditTask = (taskId: string, columnId: string) => {
-
+    const editTask = (updatedTask: TaskType) => {
+        currentBoard.value.columns.forEach((col) => {
+            if (col.name === updatedTask.status) {
+                const tasks: TaskType[] = col.tasks.map((task) => {
+                    if (task.id === updatedTask.id) {
+                        return updatedTask;
+                    }
+                    return task;
+                })
+                col.tasks = tasks;
+            }
+        });
     }
 
     const deleteTask = (taskId: string, columnId: string) => {
@@ -217,6 +235,8 @@ export const useBoardsStore = defineStore('boards', () => {
         getColumnNames,
         getColumnsAndTasks,
         setTaskColumn,
+        addTask,
+        editTask,
         getEditTask,
         setChangeTaskIndex,
     };

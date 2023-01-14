@@ -36,7 +36,7 @@
         <template #submitButton>
             <Button
               class="submit-button"
-              :click-handler="createTask"
+              :click-handler="submitTask"
               :disabled="isSubmitDisabled"
             >
                 <template #label>
@@ -96,12 +96,12 @@ const modalSubmitButton = computed(() => {
 
 // Handle input
 const useBoards = useBoardsStore();
-const { getColumnNames } = useBoards;
+const { getColumnNames, addTask, editTask } = useBoards;
 
 const currentTaskStore = useCurrentTask();
 const { getCurrentTask } = currentTaskStore;
 
-const { title, description, subtasks, status } = getCurrentTask();
+const { id, title, description, subtasks, status } = getCurrentTask();
 
 const taskTitle = ref(props.modalName === 'editTask' ? title : '');
 const taskDescription = ref(props.modalName === 'editTask' ? description : '');
@@ -142,8 +142,20 @@ const isSubmitDisabled = computed(() => {
 const appModalStore = useAppModal();
 const { toggleModal } = appModalStore;
 
-const createTask = () => {
-    console.log('create task');
+const submitTask = () => {
+    const task = {
+        description: taskDescription.value,
+        title: taskTitle.value,
+        subtasks: [],
+        status: taskStatus.value,
+    }
+    if (props.modalName === 'addTask') {
+        const newId = Math.floor(Math.random() * 1000).toString();
+        addTask({ ...task, id: newId });
+    } else {
+        editTask({ ...task, id});
+    }
+    toggleModal();
 }
 </script>
 
