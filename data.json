@@ -1,15 +1,15 @@
 {
   "boards": [
     {
-      "id": "1",
+      "id": "682c82d2-9447-11ed-b779-1c36bb122f68",
       "name": "Platform Launch",
       "columns": [
         {
-          "id": "1-1",
+          "id": "682c86c4-9447-11ed-b779-1c36bb122f68",
           "name": "Todo",
           "tasks": [
             {
-              "id": "1-1-1",
+              "id": "682c87dc-9447-11ed-b779-1c36bb122f68",
               "title": "Build UI for onboarding flow",
               "description": "",
               "status": "Todo",
@@ -26,10 +26,11 @@
                   "title": "Welcome page",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c86c4-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-1-2",
+              "id": "682c889a-9447-11ed-b779-1c36bb122f68",
               "title": "Build UI for search",
               "description": "",
               "status": "Todo",
@@ -38,10 +39,11 @@
                   "title": "Search page",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c86c4-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-1-3",
+              "id": "682c8930-9447-11ed-b779-1c36bb122f68",
               "title": "Build settings UI",
               "description": "",
               "status": "Todo",
@@ -54,10 +56,11 @@
                   "title": "Billing page",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c86c4-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-1-4",
+              "id": "682c8a66-9447-11ed-b779-1c36bb122f68",
               "title": "QA and test all major user journeys",
               "description": "Once we feel version one is ready, we need to rigorously test it both internally and externally to identify any major gaps.",
               "status": "Todo",
@@ -70,16 +73,18 @@
                   "title": "External testing",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c86c4-9447-11ed-b779-1c36bb122f68"
             }
-          ]
+          ],
+          "parentBoardId": "682c82d2-9447-11ed-b779-1c36bb122f68"
         },
         {
-          "id": "1-2",
+          "id": "682c8b92-9447-11ed-b779-1c36bb122f68",
           "name": "Doing",
           "tasks": [
             {
-              "id": "1-2-1",
+              "id": "682c8c6e-9447-11ed-b779-1c36bb122f68",
               "title": "Design settings and search pages",
               "description": "",
               "status": "Doing",
@@ -96,10 +101,11 @@
                   "title": "Search page",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c8b92-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-2-2",
+              "id": "682c8cfa-9447-11ed-b779-1c36bb122f68",
               "title": "Add account management endpoints",
               "description": "",
               "status": "Doing",
@@ -116,10 +122,11 @@
                   "title": "Update payment method",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c8b92-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-2-3",
+              "id": "682c8d7c-9447-11ed-b779-1c36bb122f68",
               "title": "Design onboarding flow",
               "description": "",
               "status": "Doing",
@@ -136,10 +143,11 @@
                   "title": "Welcome page",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c8b92-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-2-4",
+              "id": "682c8dfe-9447-11ed-b779-1c36bb122f68",
               "title": "Add search enpoints",
               "description": "",
               "status": "Doing",
@@ -152,10 +160,11 @@
                   "title": "Define search filters",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c8b92-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-2-5",
+              "id": "682c8e80-9447-11ed-b779-1c36bb122f68",
               "title": "Add authentication endpoints",
               "description": "",
               "status": "Doing",
@@ -168,10 +177,11 @@
                   "title": "Add auth endpoints",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c8b92-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-2-6",
+              "id": "682c8f02-9447-11ed-b779-1c36bb122f68",
               "title": "Research pricing points of various competitors and trial different business models",
               "description": "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.",
               "status": "Doing",
@@ -188,16 +198,18 @@
                   "title": "Talk to potential customers about our proposed solution and ask for fair price expectancy",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c8b92-9447-11ed-b779-1c36bb122f68"
             }
-          ]
+          ],
+          "parentBoardId": "682c82d2-9447-11ed-b779-1c36bb122f68"
         },
         {
-          "id": "1-3",
+          "id": "682c8f84-9447-11ed-b779-1c36bb122f68",
           "name": "Done",
           "tasks": [
             {
-              "id": "1-3-1",
+              "id": "682c9006-9447-11ed-b779-1c36bb122f68",
               "title": "Conduct 5 wireframe tests",
               "description": "Ensure the layout continues to make sense and we have strong buy-in from potential users.",
               "status": "Done",
@@ -206,10 +218,11 @@
                   "title": "Complete 5 wireframe prototype tests",
                   "isCompleted": true
                 }
-              ]
+              ],
+              "parentColumnId": "682c8f84-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-3-2",
+              "id": "682c9088-9447-11ed-b779-1c36bb122f68",
               "title": "Create wireframe prototype",
               "description": "Create a greyscale clickable wireframe prototype to test our asssumptions so far.",
               "status": "Done",
@@ -218,10 +231,11 @@
                   "title": "Create clickable wireframe prototype in Balsamiq",
                   "isCompleted": true
                 }
-              ]
+              ],
+              "parentColumnId": "682c8f84-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-3-3",
+              "id": "682c910a-9447-11ed-b779-1c36bb122f68",
               "title": "Review results of usability tests and iterate",
               "description": "Keep iterating through the subtasks until we're clear on the core concepts for the app.",
               "status": "Done",
@@ -238,10 +252,11 @@
                   "title": "Conduct 5 usability tests",
                   "isCompleted": true
                 }
-              ]
+              ],
+              "parentColumnId": "682c8f84-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-3-4",
+              "id": "682c918c-9447-11ed-b779-1c36bb122f68",
               "title": "Create paper prototypes and conduct 10 usability tests with potential customers",
               "description": "",
               "status": "Done",
@@ -254,10 +269,11 @@
                   "title": "Complete 10 usability tests",
                   "isCompleted": true
                 }
-              ]
+              ],
+              "parentColumnId": "682c8f84-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-3-5",
+              "id": "682c920e-9447-11ed-b779-1c36bb122f68",
               "title": "Market discovery",
               "description": "We need to define and refine our core product. Interviews will help us learn common pain points and help us define the strongest MVP.",
               "status": "Done",
@@ -266,10 +282,11 @@
                   "title": "Interview 10 prospective customers",
                   "isCompleted": true
                 }
-              ]
+              ],
+              "parentColumnId": "682c8f84-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-3-6",
+              "id": "682c9286-9447-11ed-b779-1c36bb122f68",
               "title": "Competitor analysis",
               "description": "",
               "status": "Done",
@@ -282,10 +299,11 @@
                   "title": "SWOT analysis for each competitor",
                   "isCompleted": true
                 }
-              ]
+              ],
+              "parentColumnId": "682c8f84-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "1-3-7",
+              "id": "682c9308-9447-11ed-b779-1c36bb122f68",
               "title": "Research the market",
               "description": "We need to get a solid overview of the market to ensure we have up-to-date estimates of market size and demand.",
               "status": "Done",
@@ -298,22 +316,24 @@
                   "title": "Calculate TAM",
                   "isCompleted": true
                 }
-              ]
+              ],
+              "parentColumnId": "682c8f84-9447-11ed-b779-1c36bb122f68"
             }
-          ]
+          ],
+          "parentBoardId": "682c82d2-9447-11ed-b779-1c36bb122f68"
         }
       ]
     },
     {
-      "id": "2",
+      "id": "682c93c6-9447-11ed-b779-1c36bb122f68",
       "name": "Marketing Plan",
       "columns": [
         {
-          "id": "2-1",
+          "id": "682c9466-9447-11ed-b779-1c36bb122f68",
           "name": "Todo",
           "tasks": [
             {
-              "id": "2-1-1",
+              "id": "682c94f2-9447-11ed-b779-1c36bb122f68",
               "title": "Plan Product Hunt launch",
               "description": "",
               "status": "Todo",
@@ -342,10 +362,11 @@
                   "title": "Launch!",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c9466-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "2-1-2",
+              "id": "682c9574-9447-11ed-b779-1c36bb122f68",
               "title": "Share on Show HN",
               "description": "",
               "status": "",
@@ -362,10 +383,11 @@
                   "title": "Publish post",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c9466-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "2-1-3",
+              "id": "682c95f6-9447-11ed-b779-1c36bb122f68",
               "title": "Write launch article to publish on multiple channels",
               "description": "",
               "status": "",
@@ -386,32 +408,36 @@
                   "title": "Publish on Medium",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c9466-9447-11ed-b779-1c36bb122f68"
             }
-          ]
+          ],
+          "parentBoardId": "682c93c6-9447-11ed-b779-1c36bb122f68"
         },
         {
-          "id": "2-2",
+          "id": "682c9678-9447-11ed-b779-1c36bb122f68",
           "name": "Doing",
-          "tasks": []
+          "tasks": [],
+          "parentBoardId": "682c93c6-9447-11ed-b779-1c36bb122f68"
         },
         {
-          "id": "2-3",
+          "id": "682c9704-9447-11ed-b779-1c36bb122f68",
           "name": "Done",
-          "tasks": []
+          "tasks": [],
+          "parentBoardId": "682c93c6-9447-11ed-b779-1c36bb122f68"
         }
       ]
     },
     {
-      "id": "3",
+      "id": "682c97c2-9447-11ed-b779-1c36bb122f68",
       "name": "Roadmap",
       "columns": [
         {
-          "id": "3-1",
+          "id": "682c9858-9447-11ed-b779-1c36bb122f68",
           "name": "Now",
           "tasks": [
             {
-              "id": "3-1-1",
+              "id": "682c98e4-9447-11ed-b779-1c36bb122f68",
               "title": "Launch version one",
               "description": "",
               "status": "",
@@ -424,10 +450,11 @@
                   "title": "Launch publicly on PH, HN, etc.",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c9858-9447-11ed-b779-1c36bb122f68"
             },
             {
-              "id": "3-1-2",
+              "id": "682c9966-9447-11ed-b779-1c36bb122f68",
               "title": "Review early feedback and plan next steps for roadmap",
               "description": "Beyond the initial launch, we're keeping the initial roadmap completely empty. This meeting will help us plan out our next steps based on actual customer feedback.",
               "status": "",
@@ -444,19 +471,23 @@
                   "title": "Outline next steps for our roadmap",
                   "isCompleted": false
                 }
-              ]
+              ],
+              "parentColumnId": "682c9858-9447-11ed-b779-1c36bb122f68"
             }
-          ]
+          ],
+          "parentBoardId": "682c97c2-9447-11ed-b779-1c36bb122f68"
         },
         {
-          "id": "3-2",
+          "id": "682c99e8-9447-11ed-b779-1c36bb122f68",
           "name": "Next",
-          "tasks": []
+          "tasks": [],
+          "parentBoardId": "682c97c2-9447-11ed-b779-1c36bb122f68"
         },
         {
-          "id": "3-3",
+          "id": "682c9a6a-9447-11ed-b779-1c36bb122f68",
           "name": "Later",
-          "tasks": []
+          "tasks": [],
+          "parentBoardId": "682c97c2-9447-11ed-b779-1c36bb122f68"
         }
       ]
     }

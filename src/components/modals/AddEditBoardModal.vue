@@ -51,6 +51,7 @@ import { useAppModal } from '@/stores/appGlobals';
 import { useCurrentFormErrors } from '@/stores/form';
 import { useBoardsStore } from '@/stores/boards';
 import { useCurrentBoard } from '@/stores/current';
+import { createId } from '@/helpers/formatters';
 
 const props = defineProps<{
     modalName: string, 
@@ -163,7 +164,7 @@ const submitBoard = () => {
     }
 
     if (props.modalName === 'addBoard') {
-        const newId = Math.floor(Math.random() * 1000).toString();
+        const newId = createId();
         addBoard({ id: newId, ...newData })
     } else {
         editBoard({ id, ...newData });

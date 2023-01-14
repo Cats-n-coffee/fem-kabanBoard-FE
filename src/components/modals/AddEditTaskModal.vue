@@ -62,6 +62,7 @@ import { useCurrentTask } from '@/stores/current';
 import { useCurrentFormErrors } from '@/stores/form';
 import { useAppModal } from '@/stores/appGlobals';
 import { useBoardsStore } from '@/stores/boards';
+import { createId } from '@/helpers/formatters';
 
 const props = defineProps<{
     modalName: string, 
@@ -150,7 +151,7 @@ const submitTask = () => {
         status: taskStatus.value,
     }
     if (props.modalName === 'addTask') {
-        const newId = Math.floor(Math.random() * 1000).toString();
+        const newId = createId();
         addTask({ ...task, id: newId });
     } else {
         editTask({ ...task, id});
