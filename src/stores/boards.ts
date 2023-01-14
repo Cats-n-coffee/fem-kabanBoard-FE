@@ -49,11 +49,33 @@ export const useBoardsStore = defineStore('boards', () => {
         console.log('board', boardToEdit);
     };
 
-    const deleteBoard = () => { };
+    const deleteBoard = (boardId: string) => {
+        const remainingBoards = boards.value.filter((board) => {
+            return board.id !== boardId;
+        })
+
+        boards.value = remainingBoards;
+        // Set the current board in view to the first board or nothing
+        if (remainingBoards.length) {
+            setCurrentBoard({
+                id: boards.value[0].id,
+                name: boards.value[0].name,
+                columns: boards.value[0].columns,
+            });
+        } else { // need to change when handle no boards view
+            setCurrentBoard({ id: '', name: '', columns: [] });
+        }
+        getColumnsAndTasks();
+    };
 
     // Columns only
     const getColumn = (columnId: string) => {
-        let column: ColumnType = { id: '', name: '', tasks: [] };
+        let column: ColumnType = {
+            id: '',
+            name: '',
+            tasks: [],
+            parentBoardId: currentBoard.value.id
+        };
 
         columnsAndTasks.value.forEach((col) => {
             if (col.id === columnId) {
@@ -99,6 +121,7 @@ export const useBoardsStore = defineStore('boards', () => {
             title: '',
             subtasks: [],
             status: '',
+            parentColumnId: '',
         };
     
         columnsAndTasks.value.forEach((column) => {
@@ -168,6 +191,7 @@ export const useBoardsStore = defineStore('boards', () => {
             title: '',
             subtasks: [],
             status: '',
+            parentColumnId: '',
         };
     
         columnsAndTasks.value.forEach((column) => {
@@ -215,11 +239,11 @@ export const useBoardsStore = defineStore('boards', () => {
         getBoards();
 
         if (boards.value.length) {
-            setCurrentBoard(
-                boards.value[0].id,
-                boards.value[0].name,
-                boards.value[0].columns,
-            );
+            setCurrentBoard({
+                id: boards.value[0].id,
+                name: boards.value[0].name,
+                columns: boards.value[0].columns,
+            });
             getColumnsAndTasks();
         }
     }
@@ -228,6 +252,7 @@ export const useBoardsStore = defineStore('boards', () => {
         boards,
         addBoard,
         editBoard,
+        deleteBoard,
         columnsAndTasks,
         fetchBoards,
         getBoards,
@@ -236,6 +261,7 @@ export const useBoardsStore = defineStore('boards', () => {
         getColumnsAndTasks,
         setTaskColumn,
         addTask,
+        deleteTask,
         editTask,
         getEditTask,
         setChangeTaskIndex,

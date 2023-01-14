@@ -14,7 +14,7 @@ export const useCurrentBoard = defineStore('currentBoard', () => {
         return currentBoard.value;
     };
 
-    const setCurrentBoard = (id: string, name: string, columns: ColumnType[]) => {
+    const setCurrentBoard = ({ id, name, columns }: BoardsType) => {
         currentBoard.value = {
             id,
             name,
@@ -39,6 +39,7 @@ export const useCurrentTask = defineStore('currentTask', () => {
         title: '',
         subtasks: [],
         status: '',
+        parentColumnId: '',
     });
 
     const getCurrentTask = () => {

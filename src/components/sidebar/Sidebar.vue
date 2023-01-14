@@ -64,7 +64,7 @@ defineProps<{
 }>()
 
 const setCurrentBoardState = (id: string, name: string, columns: ColumnType[]) => {
-    setCurrentBoard(id, name, columns);
+    setCurrentBoard({ id, name, columns });
     getColumnsAndTasks();
 }
 

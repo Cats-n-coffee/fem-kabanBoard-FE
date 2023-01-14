@@ -9,12 +9,14 @@ export interface TaskType {
     title: string,
     subtasks: SubTaskType[],
     status: string,
+    parentColumnId: string,
 }
 
 export interface ColumnType {
     id: string,
     name: string,
     tasks: TaskType[],
+    parentBoardId: string,
 }
 
 export interface BoardsType {

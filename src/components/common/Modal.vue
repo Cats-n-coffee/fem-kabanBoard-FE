@@ -1,8 +1,10 @@
 <template>
     <div class="modal">
-        <DeleteBoardModal v-if="modalName === 'deleteBoard'" />
         <TaskViewModal v-if="modalName === 'viewTask'" />
-        <DeleteTaskModal v-if="modalName === 'deleteTask'" />
+        <DeleteModal
+          v-if="modalName === 'deleteTask' || modalName === 'deleteBoard'"
+          :modal-name="modalName"
+        />
         <AddEditBoardModal
           v-if="modalName === 'addBoard' || modalName === 'editBoard'"
           :modal-name="modalName"
@@ -16,9 +18,8 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import DeleteBoardModal from '@/components/modals/DeleteBoardModal.vue';
 import TaskViewModal from '@/components/modals/TaskViewModal.vue';
-import DeleteTaskModal from '@/components/modals/DeleteTaskModal.vue';
+import DeleteModal from '@/components/modals/DeleteModal.vue';
 import { useAppModal } from '@/stores/appGlobals';
 import AddEditBoardModal from '@/components/modals/AddEditBoardModal.vue';
 import AddEditTaskModal from '@/components/modals/AddEditTaskModal.vue';
