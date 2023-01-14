@@ -21,7 +21,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { storeToRefs } from 'pinia';
 import { vOnClickOutside } from '@vueuse/components';
 import CheckboxRibbon from '../common/CheckboxRibbon.vue';
 import EllipsisButton from '../common/EllipsisButton.vue';
