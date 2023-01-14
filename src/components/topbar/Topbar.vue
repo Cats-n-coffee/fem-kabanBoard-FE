@@ -6,7 +6,7 @@
         <div class="persistent-bar" :class="{ reduced: !hideSidebar}">
             <div class="board-title-action">
                 <LogoMobile class="logo-mobile" />
-                <h2>Board name</h2>
+                <h2>{{ boardName }}</h2>
                 <button class="sidebar-toggle-mobile" @click="handleSidebarMobile">
                     <ChevronDownIcon class="chevron" :class="{ rotate: !hideSidebar }"/>
                 </button>
@@ -30,19 +30,27 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import Button from '@/components/common/Button.vue';
 import Logo from '@/components/common/Logo.vue';
 import ChevronDownIcon from '@/assets/images/icon-chevron-down.svg?component';
 import LogoMobile from '@/assets/images/logo-mobile.svg?component';
 import EllipsisButton from '@/components/common/EllipsisButton.vue';
-import { useHideSidebar } from '@/stores/appGlobals';
-import { useAppModal } from '@/stores/appGlobals';
+import { useHideSidebar, useAppModal } from '@/stores/appGlobals';
+import { useCurrentBoard } from '@/stores/current';
 
 defineProps<{
     msg: string
 }>()
+
+// Current board
+const currentBoardStore = useCurrentBoard();
+const { getCurrentBoard } = currentBoardStore;
+
+const boardName = computed(() => {
+    return getCurrentBoard().name;
+});
 
 // Sidebar
 const sidebarStore = useHideSidebar();
