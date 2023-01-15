@@ -72,20 +72,21 @@ const reorderColumnNames = computed(() => {
 const optionSelected = ref(reorderColumnNames.value[0] || '');
 
 const toggleOptions = () => {
-    console.log('toggled');
     isSelectExpanded.value = !isSelectExpanded.value;
 };
 
 const closeDropdown = () => {
     isSelectExpanded.value = false;
 }
-// https://stackoverflow.com/questions/71253452/vue-3-global-directive-click-outside
-// https://stackoverflow.com/questions/60144575/how-do-you-handle-click-outside-of-element-properly-in-vuejs
-// https://medium.com/@Taha_Shashtari/an-easy-way-to-detect-clicks-outside-an-element-in-vue-1b51d43ff634
+
+const emit = defineEmits(['selectChanged']);
+
 const selectOption = (option: string) => {
+    if (option !== optionSelected.value) {
+        emit('selectChanged', option);
+    }
     optionSelected.value = option;
     toggleOptions();
-    console.log('selected', optionSelected.value);
 };
 </script>
 

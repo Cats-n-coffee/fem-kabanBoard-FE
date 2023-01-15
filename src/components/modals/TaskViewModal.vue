@@ -1,5 +1,5 @@
 <template>
-    <div class="view-task-modal" v-on-click-outside="toggleModal">
+    <div class="view-task-modal" v-on-click-outside="updateAndClose">
         <div class="task-title-actions">
             <h2>{{ title }}</h2>
             <EllipsisButton
@@ -15,18 +15,25 @@
             <h3 class="form-label">Subtasks ({{ numberOfCompletedTasks }})</h3>
             <CheckboxRibbon :subtasks="subtasks" />
         </div>
-        <FormSelect label="Current Status" for-attr="view-task-select" />
+        <FormSelect
+          label="Current Status"
+          for-attr="view-task-select"
+          :selected-value="taskStatus"
+          :values="allColumnsNames"
+          @select-changed="updateStatus($event)"
+        />
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { vOnClickOutside } from '@vueuse/components';
 import CheckboxRibbon from '../common/CheckboxRibbon.vue';
 import EllipsisButton from '../common/EllipsisButton.vue';
 import FormSelect from '../common/FormSelect.vue';
 import { useCurrentTask } from '@/stores/current';
 import { useAppModal } from '@/stores/appGlobals';
+import { useBoardsStore } from '@/stores/boards';
 import { completedSubtasks } from '@/helpers/formatters';
 
 const currentTaskStore = useCurrentTask();
@@ -36,6 +43,7 @@ const { title, description, subtasks, status } = getCurrentTask();
 const appModalStore = useAppModal();
 const { setModalName, toggleModal } = appModalStore;
 
+// Modal toggles
 const showEditTaskModal = () => {
     setModalName('editTask');
 };
@@ -44,10 +52,30 @@ const showDeleteTaskModal = () => {
     setModalName('deleteTask');
 };
 
+// Subtasks display
 const numberOfCompletedTasks = computed(() => {
     const completed = completedSubtasks(subtasks);
     return `${completed} of ${subtasks.length}`;
 });
+
+const boardsStore = useBoardsStore();
+const { getColumnNames } = boardsStore;
+
+// Handle inputs
+
+
+const taskStatus = ref(status);
+const allColumnsNames = getColumnNames();
+
+const updateStatus = (option: string) => {
+    taskStatus.value = option;
+};
+
+// Edit state and close modal
+const updateAndClose = () => {
+    // edit task on close
+    toggleModal();
+};
 </script>
 
 <style scoped lang="less">
