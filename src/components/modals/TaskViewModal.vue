@@ -13,7 +13,10 @@
         <p v-if="description" class="task-description">{{ description }}</p>
         <div class="task-subtasks">
             <h3 class="form-label">Subtasks ({{ numberOfCompletedTasks }})</h3>
-            <CheckboxRibbon :subtasks="subtasks" />
+            <CheckboxRibbon
+              :subtasks="currentSubtasks"
+              @subtask-updated="subtaskUpdated($event)"
+            />
         </div>
         <FormSelect
           label="Current Status"
@@ -62,7 +65,19 @@ const boardsStore = useBoardsStore();
 const { getColumnNames } = boardsStore;
 
 // Handle inputs
+const currentSubtasks = ref(subtasks || []);
 
+const subtaskUpdated = (event: any) => { // Updated state directly
+    const { currentValue, title } = event;
+
+    const updatedSubtasks = currentSubtasks.value.map((subtask) => {
+        if (title === subtask.title) {
+            subtask.isCompleted = currentValue;
+        }
+        return subtask;
+    });
+    currentSubtasks.value = updatedSubtasks;
+};
 
 const taskStatus = ref(status);
 const allColumnsNames = getColumnNames();
@@ -71,7 +86,7 @@ const updateStatus = (option: string) => {
     taskStatus.value = option;
 };
 
-// Edit state and close modal
+// Edit state for status and close modal
 const updateAndClose = () => {
     // edit task on close
     toggleModal();

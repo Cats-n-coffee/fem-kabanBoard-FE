@@ -7,7 +7,18 @@
           :class="{ completed: isCompleted }"
         >
             <label :for="title">
-                <input type="checkbox" :checked="isCompleted" :id="title" />
+                <input
+                  type="checkbox"
+                  :checked="isCompleted"
+                  :id="title"
+                  @change="$emit(
+                    'subtaskUpdated',
+                    {
+                      currentValue: ($event.target as HTMLInputElement).checked,
+                      title,
+                    },
+                  )"
+                />
                 <span>
                     {{ title }}
                 </span>
