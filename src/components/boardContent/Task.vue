@@ -9,14 +9,15 @@
       :data-task-hovered-index="index"
     >
         <p class="task-title">{{ title }}</p>
-        <p class="subtasks-count">{{ subtasks.length }} of subtasks</p>
+        <p class="subtasks-count">{{ numberOfCompletedTasks(subtasks) }}</p>
     </div>
 </template>
 
 <script setup lang="ts">
 import { useCurrentTask } from '@/stores/current';
 import { useAppModal } from '@/stores/appGlobals';
-import type { TaskType } from '@/@types/boardTypes';
+import type { SubTaskType, TaskType } from '@/@types/boardTypes';
+import { completedSubtasks } from '@/helpers/formatters';
 
 export interface Props {
     tasks?: TaskType[],
@@ -47,6 +48,11 @@ const { setCurrentTask } = currentTaskStore;
 
 const appModalStore = useAppModal();
 const { toggleModal, setModalName } = appModalStore;
+
+const numberOfCompletedTasks = (subtasks: SubTaskType[]) => {
+    const completed = completedSubtasks(subtasks);
+    return `${completed} of ${subtasks.length} of subtasks`;
+};
 
 const viewTask = (taskId: string) => {
     setCurrentTask(taskId, props.columnId);

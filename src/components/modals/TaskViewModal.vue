@@ -27,6 +27,7 @@ import EllipsisButton from '../common/EllipsisButton.vue';
 import FormSelect from '../common/FormSelect.vue';
 import { useCurrentTask } from '@/stores/current';
 import { useAppModal } from '@/stores/appGlobals';
+import { completedSubtasks } from '@/helpers/formatters';
 
 const currentTaskStore = useCurrentTask();
 const { getCurrentTask } = currentTaskStore;
@@ -40,12 +41,12 @@ const showEditTaskModal = () => {
 };
 
 const showDeleteTaskModal = () => {
-    console.log('delete task modal');
     setModalName('deleteTask');
 };
 
 const numberOfCompletedTasks = computed(() => {
-    return 'num of total';
+    const completed = completedSubtasks(subtasks);
+    return `${completed} of ${subtasks.length}`;
 });
 </script>
 
