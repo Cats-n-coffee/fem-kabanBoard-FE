@@ -28,7 +28,7 @@ export const useBoardsStore = defineStore('boards', () => {
         return jsonBoards;
     };
 
-    // Boards only
+    // ====================================== Boards only
     const getBoards = () => {
         return boards.value;
     };
@@ -68,7 +68,7 @@ export const useBoardsStore = defineStore('boards', () => {
         getColumnsAndTasks();
     };
 
-    // Columns only
+    // ================================= Columns only
     const getColumn = (columnId: string) => {
         let column: ColumnType = {
             id: '',
@@ -90,11 +90,23 @@ export const useBoardsStore = defineStore('boards', () => {
         return currentBoard.value.columns.map((col) => col.name);     
     };
 
+    const getColumnId = (columnName: string) => {
+        let id = '';
+
+        currentBoard.value.columns.forEach((col) => {
+            if (columnName === col.name) {
+                id = col.id;
+            }
+        })
+
+        return id;
+    };
+
     const setColumns = () => { };
 
     const deleteColumn = () => { };
 
-    // Columns and Tasks
+    // ================================ Columns and Tasks
     const getColumnsAndTasks = () => {
         columnsAndTasks.value = [];
         boards.value.forEach((board) => {
@@ -104,7 +116,7 @@ export const useBoardsStore = defineStore('boards', () => {
         })
     };
 
-    // Tasks only
+    // ================================== Tasks only
     const addTask = (newTask: TaskType) => {
         currentBoard.value.columns.forEach((col) => {
             if (col.name === newTask.status) {
@@ -147,9 +159,10 @@ export const useBoardsStore = defineStore('boards', () => {
         oldColumnId: string
     ) => { 
         const retreivedTask: TaskType = getTaskAndRemove(taskId, oldColumnId);
+        retreivedTask.parentColumnId = newColumnId;
         console.log(retreivedTask);
         columnsAndTasks.value.forEach((column) => {
-            if (newColumnId === column.id) { // need to change the task id
+            if (newColumnId === column.id) {
                 column.tasks.push(retreivedTask);
             }
         })
@@ -258,6 +271,7 @@ export const useBoardsStore = defineStore('boards', () => {
         getBoards,
         getColumn,
         getColumnNames,
+        getColumnId,
         getColumnsAndTasks,
         setTaskColumn,
         addTask,

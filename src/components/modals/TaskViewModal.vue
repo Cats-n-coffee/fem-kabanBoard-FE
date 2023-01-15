@@ -41,7 +41,7 @@ import { completedSubtasks } from '@/helpers/formatters';
 
 const currentTaskStore = useCurrentTask();
 const { getCurrentTask } = currentTaskStore;
-const { title, description, subtasks, status } = getCurrentTask();
+const { id, title, description, subtasks, status, parentColumnId } = getCurrentTask();
 
 const appModalStore = useAppModal();
 const { setModalName, toggleModal } = appModalStore;
@@ -62,12 +62,12 @@ const numberOfCompletedTasks = computed(() => {
 });
 
 const boardsStore = useBoardsStore();
-const { getColumnNames } = boardsStore;
+const { getColumnNames, getColumnId, setTaskColumn } = boardsStore;
 
 // Handle inputs
 const currentSubtasks = ref(subtasks || []);
 
-const subtaskUpdated = (event: any) => { // Updated state directly
+const subtaskUpdated = (event: any) => { // Updates state directly
     const { currentValue, title } = event;
 
     const updatedSubtasks = currentSubtasks.value.map((subtask) => {
@@ -88,7 +88,8 @@ const updateStatus = (option: string) => {
 
 // Edit state for status and close modal
 const updateAndClose = () => {
-    // edit task on close
+    const newColumnId = getColumnId(taskStatus.value);
+    setTaskColumn(id, newColumnId, parentColumnId);
     toggleModal();
 };
 </script>
