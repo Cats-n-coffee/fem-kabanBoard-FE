@@ -21,8 +21,8 @@
               field-to-display="name"
               :fields-to-use="interactiveFields"
               :placeholder-data="modalPlaceholderColumns"
-              @input-interactive-value="updateBoardColumns"
-              @input-interactive-error="updateColumnsError"
+              :placeholder-text="modalPlaceholderColumnText"
+              @send-updates="updateBoardColumns"
             />
         </template>
         <template #submitButton>
@@ -42,6 +42,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, type Ref } from 'vue';
 import { storeToRefs } from 'pinia';
+import { v4 as uuidv4 } from 'uuid';
 import type { ColumnType } from '@/@types/boardTypes';
 import Form from '@/components/common/Form.vue';
 import FormInputField from '@/components/common/FormInputField.vue';
@@ -94,17 +95,24 @@ const modalPlaceholderColumns = computed(() => {
      : false;
 });
 
-const interactiveFields: ColumnType = {
-    id: '',
-    name: '',
-    tasks: [],
-};
+const modalPlaceholderColumnText = computed(() => {
+    return props.modalName === 'addBoard'
+     ? 'e.g Todo'
+     : '';
+})
 
 // Input handling
 const currentBoardStore = useCurrentBoard();
 const { getCurrentBoard } = currentBoardStore;
 
 const { id, name, columns } = getCurrentBoard();
+
+const interactiveFields: ColumnType = {
+    id: '',
+    name: '',
+    tasks: [],
+    parentBoardId: id,
+};
 
 const boardName = ref(props.modalName === 'editBoard' ? name : '');
 const boardColumns: Ref<ColumnType[]> = ref(
@@ -115,14 +123,14 @@ const updateBoardName = (value: string) => {
     boardName.value = value;
 }
 
-const updateBoardColumns = (value: string) => {
-    const newId = Math.floor(Math.random() * 1000).toString();
-    const newColumn = {
-        id: newId,
-        name: value,
-        tasks: [],
+const updateBoardColumns = (value: ColumnType[]) => {
+    const updatedItems = [];
+    for (let i = 0; i < value.length; i++) {
+        const newId = uuidv4();
+        updatedItems.push({ ...value[i], id: newId});
     }
-    boardColumns.value.push(newColumn);
+
+    boardColumns.value = updatedItems;
 }
 
 // Error handling
@@ -133,17 +141,12 @@ const { setCurrentErrors } = currentErrorsStore;
 onMounted(() => {
     setCurrentErrors({
         nameError: '',
-        columnsErrors: [],
     });
 });
 
 const updateNameError = (value: string) => {
     setCurrentErrors({ nameError: value });
 }
-
-const updateColumnsError = (value: string) => {
-    setCurrentErrors({ columnsErrors: []});
-};
 
 const isSubmitDisabled = computed(() => {
     const allErrors = Object.values(currentErrors.value);

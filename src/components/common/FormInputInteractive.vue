@@ -2,21 +2,22 @@
     <fieldset class="form-fieldset">
         <label :for="forAttr" class="form-label">{{ label }}</label>
         <div
-          v-for="(data, index) in dataToDisplay"
+          v-for="(data, index) in allData"
           :key="index"
           class="input-wrapper"
         >
             <input
               type="text"
-              :id="forAttr"
               class="form-input"
-              :value="data[fieldToDisplay]"
+              v-model="data[fieldToDisplay as keyof (ColumnType | SubTaskType)]"
+              :placeholder="placeholderText"
+              @blur="validateAndSendToParent"
             >
-            <button class="remove-item-btn" @click="deleteItem">
+            <button class="remove-item-btn" @click="deleteItem(index)">
                 <CloseIcon />
             </button>
         </div>
-        <Button :click-handler="addNewInput" class-color="light">
+        <Button :click-handler="addNewInput" class-color="light" :disabled="allData.length >= 10">
             <template #icon>
                 <span class="action-add-span">{{ buttonIcon }}</span>
             </template>
@@ -28,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, onMounted, defineEmits } from 'vue';
 import Button from '@/components/common/Button.vue';
 import CloseIcon from '@/assets/images/icon-cross.svg?component';
 import type { SubTaskType, ColumnType } from '@/@types/boardTypes';
@@ -42,7 +43,8 @@ export interface Props {
     fieldToDisplay?: string,
     fieldsToUse?: ColumnType | SubTaskType,
     placeholderData?: boolean,
-}
+    placeholderText?: string,
+};
 
 const props = withDefaults(defineProps<Props>(), {
     label: '',
@@ -53,31 +55,56 @@ const props = withDefaults(defineProps<Props>(), {
     fieldToDisplay: '',
     fieldsToUse: () => {},
     placeholderData: false,
+    placeholderText: '',
 });
 
+// Data to use
 const allData = ref<SubTaskType[] | ColumnType[]>(props.data || []);
 
-const addNewInput = () => {
-    // allData.value.push({ title: '', isCompleted: false});
-};
-
-const deleteItem = () => {
-    console.log('delete item');
-};
-// https://jsfiddle.net/crswll/24txy506/9/
-// https://stackoverflow.com/questions/34825065/vuejs-v-model-array-in-multiple-input
-const dataToDisplay = computed(() => {
-    // an array with a fake object or an object?
+onMounted(() => {
     if (
         props.placeholderData
         && !props.data?.length
         && props.fieldsToUse
     ) {
-        allData.value.push(props.fieldsToUse);
+        allData.value.push({ ...props.fieldsToUse });
     }
 
     return allData.value;
 });
+
+// Operations to perform
+const addNewInput = () => {
+    allData.value.push({ ...props.fieldsToUse });
+};
+
+const deleteItem = (index: number) => {
+    const filteredItems = allData.value.filter(
+        (_: ColumnType | SubTaskType, idx: number) => {
+        return index !== idx;
+    })
+
+    allData.value = filteredItems;
+    validateAndSendToParent();
+};
+
+// Send parent updates
+const emit = defineEmits(['sendUpdates']);
+
+const validateAndSendToParent = () => {
+    const cleanedPayload = [];
+
+    for (let i = 0; i < allData.value.length; i++) {
+        const item = allData.value[i];
+
+        // Remove empty fields before sending to parent
+        if (item[props.fieldToDisplay]) {
+            cleanedPayload.push(item);
+        }
+    }
+
+    emit('sendUpdates', cleanedPayload);
+};
 </script>
 
 <style scoped lang="less">
