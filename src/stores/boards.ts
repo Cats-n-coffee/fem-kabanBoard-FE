@@ -44,6 +44,7 @@ export const useBoardsStore = defineStore('boards', () => {
         );
         const currentColumns = boardToEdit?.columns;
         // find the current columns and compare? overwrite what's changes
+        // make sure the column name is unique
         boardToEdit = { ...boardToEdit, ...payload }
  
         console.log('board', boardToEdit);
@@ -90,7 +91,7 @@ export const useBoardsStore = defineStore('boards', () => {
         return currentBoard.value.columns.map((col) => col.name);     
     };
 
-    const getColumnId = (columnName: string) => {
+    const getColumnIdFromName = (columnName: string) => {
         let id = '';
 
         currentBoard.value.columns.forEach((col) => {
@@ -100,6 +101,18 @@ export const useBoardsStore = defineStore('boards', () => {
         })
 
         return id;
+    };
+
+    const getColumnNameFromId = (columnId: string) => {
+        let name = '';
+
+        currentBoard.value.columns.forEach((col) => {
+            if (columnId === col.id) {
+                name = col.name;
+            }
+        })
+
+        return name;
     };
 
     const setColumns = () => { };
@@ -140,7 +153,7 @@ export const useBoardsStore = defineStore('boards', () => {
             if (columnId === column.id) {
                 column.tasks.forEach((task: TaskType) => {
                     if (taskId === task.id) {
-                        wholeTask = task;
+                        wholeTask = { ...task };
                         deleteTask(taskId, columnId);
                     }
                 })
@@ -160,7 +173,8 @@ export const useBoardsStore = defineStore('boards', () => {
     ) => { 
         const retreivedTask: TaskType = getTaskAndRemove(taskId, oldColumnId);
         retreivedTask.parentColumnId = newColumnId;
-        console.log(retreivedTask);
+        retreivedTask.status = getColumnNameFromId(newColumnId);
+
         columnsAndTasks.value.forEach((column) => {
             if (newColumnId === column.id) {
                 column.tasks.push(retreivedTask);
@@ -220,9 +234,11 @@ export const useBoardsStore = defineStore('boards', () => {
         return wholeTask;
     };
 
-    const editTask = (updatedTask: TaskType) => {
+    const editTask = (updatedTask: TaskType, oldColumnId: string) => {
+        setTaskColumn(updatedTask.id, updatedTask.parentColumnId, oldColumnId);
+
         currentBoard.value.columns.forEach((col) => {
-            if (col.name === updatedTask.status) {
+            if (col.id === updatedTask.parentColumnId) {
                 const tasks: TaskType[] = col.tasks.map((task) => {
                     if (task.id === updatedTask.id) {
                         return updatedTask;
@@ -271,7 +287,7 @@ export const useBoardsStore = defineStore('boards', () => {
         getBoards,
         getColumn,
         getColumnNames,
-        getColumnId,
+        getColumnIdFromName,
         getColumnsAndTasks,
         setTaskColumn,
         addTask,

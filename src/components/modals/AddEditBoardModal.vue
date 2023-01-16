@@ -42,7 +42,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, type Ref } from 'vue';
 import { storeToRefs } from 'pinia';
-import { v4 as uuidv4 } from 'uuid';
 import type { ColumnType } from '@/@types/boardTypes';
 import Form from '@/components/common/Form.vue';
 import FormInputField from '@/components/common/FormInputField.vue';
@@ -126,7 +125,7 @@ const updateBoardName = (value: string) => {
 const updateBoardColumns = (value: ColumnType[]) => {
     const updatedItems = [];
     for (let i = 0; i < value.length; i++) {
-        const newId = uuidv4();
+        const newId = createId();
         updatedItems.push({ ...value[i], id: newId});
     }
 

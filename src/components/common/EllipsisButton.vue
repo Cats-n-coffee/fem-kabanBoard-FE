@@ -75,6 +75,8 @@ const showMoreActions = () => {
         font-size: 13px;
         font-weight: 500;
         color: var(--font-secondary);
+        text-align: left;
+        width: 100%;
 
         &:hover {
             cursor: pointer;

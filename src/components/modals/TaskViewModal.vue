@@ -62,7 +62,7 @@ const numberOfCompletedTasks = computed(() => {
 });
 
 const boardsStore = useBoardsStore();
-const { getColumnNames, getColumnId, setTaskColumn } = boardsStore;
+const { getColumnNames, getColumnIdFromName, setTaskColumn } = boardsStore;
 
 // Handle inputs
 const currentSubtasks = ref(subtasks || []);
@@ -88,7 +88,7 @@ const updateStatus = (option: string) => {
 
 // Edit state for status and close modal
 const updateAndClose = () => {
-    const newColumnId = getColumnId(taskStatus.value);
+    const newColumnId = getColumnIdFromName(taskStatus.value);
     setTaskColumn(id, newColumnId, parentColumnId);
     toggleModal();
 };
