@@ -49,3 +49,11 @@ export const checkForDuplicateName = (
 
     return adjustedName;
 };
+
+export const cleanValues = (keyName: string, data: any[]) => {
+    const cleanArray: any[] = [];
+
+    data.forEach((item) => item[keyName] && cleanArray.push(item));
+
+    return cleanArray;
+}

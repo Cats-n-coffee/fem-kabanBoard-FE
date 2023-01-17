@@ -4,15 +4,30 @@
       :key="id"
       class="column"
     >
-        <h3>{{ name }}</h3>
+        <h3>
+            <span class="column-dot" :style="{ backgroundColor: randomColor() }"></span>
+            {{ name }} ({{ tasks.length }})
+        </h3>
         <section
           class="tasks-container"
+          :class="{ 'no-tasks': !tasks.length}"
           @dragover.prevent
           @dragleave.prevent
           @dragenter="handleDragEnter($event, id)"
           @drop="handleDrop($event, id)"
         >
-            <Task :tasks="tasks" :column-id="id"/>
+            <Task
+              v-if="tasks.length"
+              :tasks="tasks"
+              :column-id="id"
+            />
+
+            <div v-else class="no-tasks-view">
+                <button @click="openTaskModal">
+                    <span>+</span>
+                    <span class="title">New Task</span>
+                </button>
+            </div>
         </section>
     </div>
 </template>
@@ -21,6 +36,7 @@
 import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useBoardsStore } from '@/stores/boards';
+import { useAppModal } from '@/stores/appGlobals';
 import Task from './Task.vue';
 import type { ColumnType } from '@/@types/boardTypes';
 
@@ -59,6 +75,18 @@ const handleDragEnter = (event: {
     
     dropIndex = taskHoveredIndex;
 }
+
+// Random colors for dots near the column name
+const randomColor = () => "#"+((1<<24)*Math.random()|0).toString(16);
+
+// Toggle add task modal
+const appModalStore = useAppModal();
+const { setModalName, toggleModal } = appModalStore;
+
+const openTaskModal = () => {
+    toggleModal();
+    setModalName('addTask');
+}
 </script>
 
 <style scoped lang="less">
@@ -68,9 +96,21 @@ const handleDragEnter = (event: {
     padding-bottom: 24px;
 
     h3 {
+        display: flex;
+        align-items: center;
         padding-bottom: 24px;
         text-transform: uppercase;
         color: var(--font-secondary);
+        font-size: 14px;
+        letter-spacing: 2.4px;
+
+        .column-dot {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
     }
 }
 
@@ -80,7 +120,36 @@ const handleDragEnter = (event: {
     justify-content: flex-start;
     align-items: flex-start;
     gap: 24px;
-    background-color: blue;  
+    
+    &.no-tasks {
+        height: 100%;
+    }
+}
+
+.no-tasks-view {
+    background: var(--medium-gradient);
+    border-radius: 6px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+        color: var(--primary);
+        font-size: 24px;
+        font-weight: 700;
+        background: none;
+        border: none;
+
+        .title {
+            margin-left: 8px;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }
 
 .drag-enter {

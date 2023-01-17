@@ -68,7 +68,7 @@ import { useCurrentTask } from '@/stores/current';
 import { useCurrentFormErrors } from '@/stores/form';
 import { useAppModal } from '@/stores/appGlobals';
 import { useBoardsStore } from '@/stores/boards';
-import { createId } from '@/helpers/formatters';
+import { createId, cleanValues } from '@/helpers/formatters';
 import type { SubTaskType } from '@/@types/boardTypes';
 
 const props = defineProps<{
@@ -170,10 +170,12 @@ const appModalStore = useAppModal();
 const { toggleModal } = appModalStore;
 
 const submitTask = () => {
+    const cleanedSubtasks = cleanValues('title', taskSubtasks.value);
+
     const task = {
         description: taskDescription.value,
         title: taskTitle.value,
-        subtasks: taskSubtasks.value,
+        subtasks: cleanedSubtasks,
         status: taskStatus.value,
         parentColumnId: getColumnIdFromName(taskStatus.value),
     }
