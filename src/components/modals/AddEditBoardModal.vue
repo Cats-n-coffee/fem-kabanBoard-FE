@@ -51,7 +51,7 @@ import { useAppModal } from '@/stores/appGlobals';
 import { useCurrentFormErrors } from '@/stores/form';
 import { useBoardsStore } from '@/stores/boards';
 import { useCurrentBoard } from '@/stores/current';
-import { createId, checkForDuplicateName } from '@/helpers/formatters';
+import { createId, checkForDuplicateName, cleanValues } from '@/helpers/formatters';
 
 const props = defineProps<{
     modalName: string, 
@@ -170,9 +170,11 @@ const appModalStore = useAppModal();
 const { toggleModal } = appModalStore;
 
 const submitBoard = () => {
+    const cleanedColumns = cleanValues('name', boardColumns.value);
+
     const newData = {
         name: boardName.value,
-        columns: boardColumns.value,
+        columns: cleanedColumns,
     }
 
     if (props.modalName === 'addBoard') {
