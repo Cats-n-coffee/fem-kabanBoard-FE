@@ -26,7 +26,7 @@ import type { ColumnType } from '@/@types/boardTypes';
 
 const boardsStore = useBoardsStore();
 const { columnsAndTasks } = storeToRefs(boardsStore);
-const { setTaskColumn, getColumn, setChangeTaskIndex }= boardsStore;
+const { setTaskColumn, getColumn, setChangeTaskIndex } = boardsStore;
 
 const isDroppableItemActive = ref(false)
 let dropIndex: string;

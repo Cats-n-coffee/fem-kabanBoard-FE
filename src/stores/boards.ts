@@ -38,16 +38,14 @@ export const useBoardsStore = defineStore('boards', () => {
     };
 
     const editBoard = (payload: BoardsType) => {
-        console.log('edit', payload);
-        let boardToEdit = boards.value.find(
+        const boardToEdit = boards.value.find(
             (board) => board.id === payload.id
         );
-        const currentColumns = boardToEdit?.columns;
-        // find the current columns and compare? overwrite what's changes
-        // make sure the column name is unique
-        boardToEdit = { ...boardToEdit, ...payload }
- 
-        console.log('board', boardToEdit);
+
+        currentBoard.value = { ...payload };
+        boardToEdit!.name = payload.name;
+        boardToEdit!.columns = [...payload.columns];
+        columnsAndTasks.value = [...payload.columns];
     };
 
     const deleteBoard = (boardId: string) => {

@@ -51,7 +51,7 @@ import { useAppModal } from '@/stores/appGlobals';
 import { useCurrentFormErrors } from '@/stores/form';
 import { useBoardsStore } from '@/stores/boards';
 import { useCurrentBoard } from '@/stores/current';
-import { createId } from '@/helpers/formatters';
+import { createId, checkForDuplicateName } from '@/helpers/formatters';
 
 const props = defineProps<{
     modalName: string, 
@@ -125,8 +125,18 @@ const updateBoardName = (value: string) => {
 const updateBoardColumns = (value: ColumnType[]) => {
     const updatedItems = [];
     for (let i = 0; i < value.length; i++) {
-        const newId = createId();
-        updatedItems.push({ ...value[i], id: newId});
+        if (!value[i].id) {
+            const newId = createId();
+            // Check for name duplicate
+            const nameWithAppend = checkForDuplicateName(value, value[i]);
+            updatedItems.push({
+                ...value[i],
+                id: newId,
+                name: nameWithAppend || value[i].name,
+            });
+        } else {
+            updatedItems.push({ ...value[i] });
+        }
     }
 
     boardColumns.value = updatedItems;
