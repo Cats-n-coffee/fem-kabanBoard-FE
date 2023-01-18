@@ -2,11 +2,11 @@ import { ref, type Ref } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
 import { useCurrentBoard } from './current';
 import type {
-    SubTaskType,
     TaskType,
     ColumnType,
     BoardsType,
 } from '@/@types/boardTypes';
+import { getFromLocalStorage, setToLocalStorage } from '@/helpers/storage';
 
 export const useBoardsStore = defineStore('boards', () => {
     const boards: Ref<BoardsType[]> = ref([]);
@@ -19,13 +19,20 @@ export const useBoardsStore = defineStore('boards', () => {
 
     // Initial data
     const fetchBoards = async () => {
-        const response = await fetch('./data.json');
-        const jsonBoards = await response.json();
-        boards.value = jsonBoards.boards;
+        const storage = getFromLocalStorage('boards');
 
-        // add localStorage
+        if (storage) {
+            const parsedStorage = JSON.parse(storage);
+            boards.value = parsedStorage;
+        } else {
+            const response = await fetch('./data.json');
+            const jsonBoards = await response.json();
+            boards.value = jsonBoards.boards;
+
+            setToLocalStorage('boards', jsonBoards.boards);
+        }
+        
         prepareStateAfterFetch();
-        return jsonBoards;
     };
 
     // ====================================== Boards only
@@ -35,6 +42,7 @@ export const useBoardsStore = defineStore('boards', () => {
 
     const addBoard = (board: BoardsType) => {
         boards.value.push(board);
+        setToLocalStorage('boards', boards.value);
     };
 
     const editBoard = (payload: BoardsType) => {
@@ -46,6 +54,7 @@ export const useBoardsStore = defineStore('boards', () => {
         boardToEdit!.name = payload.name;
         boardToEdit!.columns = [...payload.columns];
         columnsAndTasks.value = [...payload.columns];
+        setToLocalStorage('boards', boards.value);
     };
 
     const deleteBoard = (boardId: string) => {
@@ -65,6 +74,7 @@ export const useBoardsStore = defineStore('boards', () => {
             setCurrentBoard({ id: '', name: '', columns: [] });
         }
         getColumnsAndTasks();
+        setToLocalStorage('boards', boards.value);
     };
 
     // ================================= Columns only
@@ -113,10 +123,6 @@ export const useBoardsStore = defineStore('boards', () => {
         return name;
     };
 
-    const setColumns = () => { };
-
-    const deleteColumn = () => { };
-
     // ================================ Columns and Tasks
     const getColumnsAndTasks = () => {
         columnsAndTasks.value = [];
@@ -133,7 +139,8 @@ export const useBoardsStore = defineStore('boards', () => {
             if (col.name === newTask.status) {
                 col.tasks.push(newTask);
             }
-        })
+        });
+        setToLocalStorage('boards', boards.value);
     };
 
     // Returns the task obj and removes from original column
@@ -177,7 +184,8 @@ export const useBoardsStore = defineStore('boards', () => {
             if (newColumnId === column.id) {
                 column.tasks.push(retreivedTask);
             }
-        })
+        });
+        setToLocalStorage('boards', boards.value);
     }; // status
 
     const setChangeTaskIndex = (
@@ -206,7 +214,7 @@ export const useBoardsStore = defineStore('boards', () => {
                 col.tasks.splice(taskOriginalIndex + 1, 1);
             } 
         })
-
+        setToLocalStorage('boards', boards.value);
     };
 
     const getEditTask = (taskId: string, columnId: string): TaskType => {
@@ -246,6 +254,8 @@ export const useBoardsStore = defineStore('boards', () => {
                 col.tasks = tasks;
             }
         });
+
+        setToLocalStorage('boards', boards.value);
     }
 
     const deleteTask = (taskId: string, columnId: string) => {
@@ -256,7 +266,9 @@ export const useBoardsStore = defineStore('boards', () => {
                 );
                 column.tasks = filteredTasks;
             }
-        })
+        });
+
+        setToLocalStorage('boards', boards.value);
     };
 
     // add more methods to get the numbers for each?
