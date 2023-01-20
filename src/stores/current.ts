@@ -4,7 +4,6 @@ import { useBoardsStore } from '@/stores/boards';
 import type {
     TaskType,
     BoardsType,
-    ColumnType,
 } from '@/@types/boardTypes';
 
 export const useCurrentBoard = defineStore('currentBoard', () => {

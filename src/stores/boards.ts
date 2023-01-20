@@ -70,7 +70,7 @@ export const useBoardsStore = defineStore('boards', () => {
                 name: boards.value[0].name,
                 columns: boards.value[0].columns,
             });
-        } else { // need to change when handle no boards view
+        } else {
             setCurrentBoard({ id: '', name: '', columns: [] });
         }
         getColumnsAndTasks();
@@ -186,7 +186,7 @@ export const useBoardsStore = defineStore('boards', () => {
             }
         });
         setToLocalStorage('boards', boards.value);
-    }; // status
+    };
 
     const setChangeTaskIndex = (
         taskId: string,
@@ -270,9 +270,6 @@ export const useBoardsStore = defineStore('boards', () => {
 
         setToLocalStorage('boards', boards.value);
     };
-
-    // add more methods to get the numbers for each?
-    // break for tasks/columns/boards?
 
     const prepareStateAfterFetch = () => {
         getBoards();

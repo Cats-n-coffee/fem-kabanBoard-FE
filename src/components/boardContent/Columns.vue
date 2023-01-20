@@ -71,7 +71,6 @@ const handleDragEnter = (event: {
     if (!taskElement) return;
 
     const { taskHoveredIndex } = taskElement.dataset;
-    console.log('%c task hovered id', 'color: orange', taskHoveredIndex);
     
     dropIndex = taskHoveredIndex;
 }
